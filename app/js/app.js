@@ -20,8 +20,9 @@ const SCREEN_IDS = [
 let assumptions;
 let questions;
 let state = loadState();
-
 const elements = {};
+
+const $ = (selector) => document.querySelector(selector);
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -43,67 +44,57 @@ async function init() {
 }
 
 function cacheElements() {
-  elements.progress = document.querySelector('#app-progress');
-  elements.error = document.querySelector('#app-error');
-  elements.questionFields = document.querySelector('#question-fields');
-  elements.questionForm = document.querySelector('#question-form');
-  elements.challengeTitle = document.querySelector('#challenge-title');
-  elements.challengeText = document.querySelector('#challenge-text');
-  elements.challengeEstimate = document.querySelector('#challenge-estimate');
-  elements.activeText = document.querySelector('#active-text');
-  elements.checkinSelect = document.querySelector('#minutes-achieved');
-  elements.resultHeading = document.querySelector('#result-heading');
-  elements.resultWater = document.querySelector('#result-water');
-  elements.resultEquivalent = document.querySelector('#result-equivalent');
-  elements.resultNote = document.querySelector('#result-note');
-  elements.inviteSummary = document.querySelector('#invite-summary');
-  elements.shareFeedback = document.querySelector('#share-feedback');
-  elements.nextStepSummary = document.querySelector('#next-step-summary');
+  elements.progress = $('#app-progress');
+  elements.error = $('#app-error');
+  elements.questionFields = $('#question-fields');
+  elements.questionForm = $('#question-form');
+  elements.challengeTitle = $('#challenge-title');
+  elements.challengeText = $('#challenge-text');
+  elements.challengeEstimate = $('#challenge-estimate');
+  elements.activeText = $('#active-text');
+  elements.checkinSelect = $('#minutes-achieved');
+  elements.resultHeading = $('#result-heading');
+  elements.resultWater = $('#result-water');
+  elements.resultEquivalent = $('#result-equivalent');
+  elements.resultNote = $('#result-note');
+  elements.inviteSummary = $('#invite-summary');
+  elements.shareFeedback = $('#share-feedback');
+  elements.nextStepSummary = $('#next-step-summary');
+  elements.acceptThreeDays = $('#accept-three-days');
 }
 
 function bindStaticEvents() {
-  document.querySelector('#start-button').addEventListener('click', () => {
-    state.phase = 'questionnaire';
-    saveState();
-    showScreen('questionnaire');
-  });
-
+  $('#start-button').addEventListener('click', () => setPhase('questionnaire'));
   elements.questionForm.addEventListener('submit', handleQuestionnaireSubmit);
 
-  document.querySelector('#accept-challenge').addEventListener('click', () => {
-    state.phase = 'active';
+  $('#accept-challenge').addEventListener('click', () => {
     state.startedAt = new Date().toISOString();
     saveState();
     renderActiveScreen();
-    showScreen('active');
+    setPhase('active');
   });
 
-  document.querySelector('#checkin-button').addEventListener('click', () => {
-    state.phase = 'checkin';
-    saveState();
+  $('#checkin-button').addEventListener('click', () => {
     renderCheckinOptions();
-    showScreen('checkin');
+    setPhase('checkin');
   });
 
-  document.querySelector('#checkin-form').addEventListener('submit', handleCheckinSubmit);
+  $('#checkin-form').addEventListener('submit', handleCheckinSubmit);
 
-  document.querySelector('#result-continue').addEventListener('click', () => {
-    state.phase = 'invite';
-    saveState();
+  $('#result-continue').addEventListener('click', () => {
     renderInviteScreen();
-    showScreen('invite');
+    setPhase('invite');
   });
 
-  document.querySelector('#share-button').addEventListener('click', shareResult);
-  document.querySelector('#skip-share').addEventListener('click', showNextStep);
+  $('#share-button').addEventListener('click', shareResult);
+  $('#skip-share').addEventListener('click', showNextStep);
 
-  document.querySelector('#accept-three-days').addEventListener('click', () => {
+  elements.acceptThreeDays.addEventListener('click', () => {
     state.phase = 'three-day-active';
     state.durationDays = 3;
     state.startedAt = new Date().toISOString();
     saveState();
-    elements.nextStepSummary.textContent = 'A háromnapos kihívást elmentettük ezen az eszközön. A következő változatban napi visszajelzéssel követheted majd.';
-    document.querySelector('#accept-three-days').classList.add('d-none');
+    renderNextStepScreen(true);
   });
 
   document.querySelectorAll('[data-reset-app]').forEach((button) => {
@@ -228,10 +219,9 @@ function handleQuestionnaireSubmit(event) {
     targetMinutes,
     modelVersion: assumptions.modelVersion,
   };
-  state.phase = 'challenge';
-  saveState();
+
   renderChallengeScreen();
-  showScreen('challenge');
+  setPhase('challenge');
 }
 
 function renderChallengeScreen() {
@@ -241,7 +231,7 @@ function renderChallengeScreen() {
 
   elements.challengeTitle.textContent = 'A mai apró lépésed';
   elements.challengeText.textContent = `Ma próbáld meg körülbelül ${targetMinutes} perccel rövidebbre venni a zuhanyzásodat. A tisztálkodásból nem kell kihagynod semmit: csak arra figyelj, hogy a szükségesnél ne folyjon tovább a víz.`;
-  elements.challengeEstimate.textContent = `Ha sikerül, becslésünk szerint körülbelül ${formatRangeHu(rounded.min, rounded.max, 'liter')} vízzel csökkentheted a mai használatodat.`;
+  elements.challengeEstimate.textContent = `Becslésünk szerint körülbelül ${formatRangeHu(rounded.min, rounded.max, 'liter')} vízzel csökkentheted a mai használatodat.`;
 }
 
 function renderActiveScreen() {
@@ -275,8 +265,9 @@ function renderCheckinOptions() {
 
 function handleCheckinSubmit(event) {
   event.preventDefault();
-  const minutesAchieved = Number(elements.checkinSelect.value);
+  hideError();
 
+  const minutesAchieved = Number(elements.checkinSelect.value);
   if (!Number.isFinite(minutesAchieved) || minutesAchieved < 0) {
     showError('Válassz egy hozzávetőleges eredményt.');
     return;
@@ -287,10 +278,9 @@ function handleCheckinSubmit(event) {
     minutesAchieved,
   };
   state.result = calculateResult(minutesAchieved);
-  state.phase = 'result';
-  saveState();
+
   renderResultScreen();
-  showScreen('result');
+  setPhase('result');
 }
 
 function calculateWaterResult(minutesReduced) {
@@ -334,7 +324,7 @@ function calculateResult(minutesAchieved) {
 
 function renderResultScreen() {
   const result = state.result;
-  const mainsWater = state.answers?.water_source !== 'other';
+  const mainsWater = state.answers?.water_source === 'mains';
 
   if (!result || result.minutesAchieved === 0) {
     elements.resultHeading.textContent = 'Már az is számít, hogy kipróbáltad';
@@ -354,9 +344,14 @@ function renderResultScreen() {
 
   elements.resultEquivalent.textContent = mainsWater
     ? `Ez mennyiségében körülbelül ${personDays} ember egy napi ivóvizének felel meg.`
-    : `Ez körülbelül ${formatRangeHu(Math.max(1, Math.round(result.displayWaterMin / 10)), Math.max(1, Math.round(result.displayWaterMax / 10)))} darab 10 literes vödörnyi víz.`;
+    : `Ez körülbelül ${formatRangeHu(
+      Math.max(1, Math.round(result.displayWaterMin / 10)),
+      Math.max(1, Math.round(result.displayWaterMax / 10)),
+    )} darab 10 literes vödörnyi víz.`;
 
-  elements.resultNote.textContent = 'Gyors becslés átlagos zuhany-vízhozam alapján. A kevesebbet használt víz nem kerül automatikusan más emberekhez.';
+  elements.resultNote.textContent = mainsWater
+    ? 'Gyors becslés átlagos zuhany-vízhozam alapján. A kevesebbet használt víz nem kerül automatikusan más emberekhez.'
+    : 'Gyors becslés átlagos zuhany-vízhozam alapján.';
 }
 
 function renderInviteScreen() {
@@ -377,14 +372,18 @@ async function shareResult() {
   try {
     if (navigator.share) {
       await navigator.share(shareData);
-      elements.shareFeedback.textContent = 'A megosztási lehetőség megnyílt.';
       showNextStep();
       return;
     }
 
-    await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
-    elements.shareFeedback.textContent = 'A meghívó szöveget és a hivatkozást a vágólapra másoltuk.';
-    showNextStep();
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
+      elements.shareFeedback.textContent = 'A meghívó szöveget és a hivatkozást a vágólapra másoltuk.';
+      showNextStep();
+      return;
+    }
+
+    throw new Error('No supported share method.');
   } catch (error) {
     if (error?.name === 'AbortError') {
       elements.shareFeedback.textContent = 'A megosztást most megszakítottad.';
@@ -416,23 +415,26 @@ function buildShareData() {
 }
 
 function showNextStep() {
-  state.phase = 'next-step';
-  saveState();
-
-  const result = state.result;
-  elements.nextStepSummary.textContent = result?.minutesAchieved > 0
-    ? 'Most már láttad, mit jelenthet egyetlen nap. Ugyanezt a kis lépést három napig folytatva az eredmény is összeadódik.'
-    : 'A következő próbát három napos időszakban is elindíthatod, de nyugodtan maradhatsz még az egynapos lépésnél.';
-
-  showScreen('next-step');
+  renderNextStepScreen(false);
+  setPhase('next-step');
 }
 
-function restoreView() {
-  if (!state.phase) {
-    showScreen('intro');
+function renderNextStepScreen(isThreeDayActive) {
+  const result = state.result;
+
+  if (isThreeDayActive) {
+    elements.nextStepSummary.textContent = 'A háromnapos kihívást elmentettük ezen az eszközön. A következő változatban napi visszajelzéssel követheted majd.';
+    elements.acceptThreeDays.classList.add('d-none');
     return;
   }
 
+  elements.acceptThreeDays.classList.remove('d-none');
+  elements.nextStepSummary.textContent = result?.minutesAchieved > 0
+    ? 'Most már láttad, mit jelenthet egyetlen nap. Ugyanezt a kis lépést három napig folytatva az eredmény is összeadódik.'
+    : 'A következő próbát három napos időszakban is elindíthatod, de nyugodtan maradhatsz még az egynapos lépésnél.';
+}
+
+function restoreView() {
   switch (state.phase) {
     case 'questionnaire':
       showScreen('questionnaire');
@@ -458,22 +460,27 @@ function restoreView() {
       showScreen('invite');
       break;
     case 'next-step':
+      renderNextStepScreen(false);
+      showScreen('next-step');
+      break;
     case 'three-day-active':
-      showNextStep();
-      if (state.phase === 'three-day-active') {
-        elements.nextStepSummary.textContent = 'A háromnapos kihívás ezen az eszközön el van mentve.';
-        document.querySelector('#accept-three-days').classList.add('d-none');
-      }
+      renderNextStepScreen(true);
+      showScreen('next-step');
       break;
     default:
       showScreen('intro');
   }
 }
 
+function setPhase(phase) {
+  state.phase = phase;
+  saveState();
+  showScreen(phase);
+}
+
 function showScreen(screenId) {
   SCREEN_IDS.forEach((id) => {
-    const screen = document.querySelector(`#screen-${id}`);
-    screen?.classList.toggle('d-none', id !== screenId);
+    $(`#screen-${id}`)?.classList.toggle('d-none', id !== screenId);
   });
 
   const progressByScreen = {
@@ -490,8 +497,7 @@ function showScreen(screenId) {
   elements.progress.style.width = `${progress}%`;
   elements.progress.setAttribute('aria-valuenow', String(progress));
 
-  const heading = document.querySelector(`#screen-${screenId} h1, #screen-${screenId} h2`);
-  heading?.focus({ preventScroll: true });
+  $(`#screen-${screenId} h1, #screen-${screenId} h2`)?.focus({ preventScroll: true });
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
