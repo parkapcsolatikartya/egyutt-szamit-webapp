@@ -12,6 +12,8 @@ Ha a dokumentum nem érhető el, ezt egyértelműen jelezni kell. Nem szabad úg
 
 A webalkalmazás felületét kötelezően Bootstrap-alapokon kell felépíteni.
 
+Ez a szabály a teljes projektre vonatkozik: minden jelenlegi és későbbi oldalra, komponensre, prototípusra, staging és éles környezetre, valamint minden frontend forrásfájlra. Eltérés csak a projektgazda kifejezett jóváhagyásával és a Döntési naplóban rögzített indoklással engedélyezett.
+
 - A Bootstrap a projekt elsődleges mobile-first CSS frameworkje.
 - Elrendezéshez elsőként a Bootstrap gridet, containereket, flex- és spacing utilityket kell használni.
 - Tipográfiához, gombokhoz, űrlapokhoz, navigációhoz, kártyákhoz, visszajelzésekhez és reszponzív viselkedéshez elsőként a Bootstrap meglévő komponenseit és utility osztályait kell választani.
