@@ -1,0 +1,11 @@
+/*
+ * Együtt számít – projektspecifikus stílusok
+ *
+ * Kötelező Bootstrap-first szabály:
+ * 1. Először Bootstrap komponenseket és utility osztályokat használunk.
+ * 2. Ebbe a fájlba csak olyan célzott, egyedi szabály kerülhet,
+ *    amely Bootstrap segítségével nem oldható meg ésszerűen.
+ * 3. Nem implementáljuk újra a Bootstrap által már biztosított
+ *    általános elrendezési, spacing-, tipográfiai vagy komponensszabályokat.
+ * 4. Inline style és indokolatlan !important használata kerülendő.
+ */
