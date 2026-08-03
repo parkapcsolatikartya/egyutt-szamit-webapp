@@ -1,59 +1,92 @@
 <!doctype html>
-<html lang="hu">
+<html lang="hu" data-bs-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Az Együtt számít V0 zuhanyzási becslésének módszertana.">
   <title>Módszertan – Együtt számít</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
 </head>
-<body>
-  <header class="border-bottom bg-white">
-    <nav class="navbar app-shell" aria-label="Fő navigáció">
+<body class="app-body">
+  <header class="app-topbar border-bottom sticky-top">
+    <nav class="navbar app-shell py-3" aria-label="Fő navigáció">
       <div class="container-fluid px-0">
-        <a class="navbar-brand fw-semibold d-flex align-items-center gap-2" href="./index.html">
-          <span class="brand-mark" aria-hidden="true">●</span>
-          Együtt számít
+        <a class="navbar-brand d-flex align-items-center gap-3" href="./index.html">
+          <span class="brand-symbol brand-symbol-sm" aria-hidden="true"><i class="bi bi-droplet-half"></i></span>
+          <span class="fw-semibold">Együtt számít</span>
+        </a>
+        <a class="btn btn-outline-light btn-sm d-flex align-items-center gap-2" href="./index.html">
+          <i class="bi bi-arrow-left"></i>
+          Vissza
         </a>
       </div>
     </nav>
   </header>
 
   <main class="app-shell py-4 py-md-5">
-    <article class="card border-0 shadow-sm">
+    <article class="card document-card border-0">
       <div class="card-body p-4 p-md-5">
-        <h1 class="h2 mb-3">Hogyan számol a V0 prototípus?</h1>
-        <p class="lead text-body-secondary">A jelenlegi változat gyors becslést ad az egynapos, rövidebb zuhanyzási kihívás vízhatásáról.</p>
-
-        <h2 class="h4 mt-5">A vízmennyiség becslése</h2>
-        <p>A becsült csökkentés képlete:</p>
-        <p class="border rounded-3 bg-body-tertiary p-3"><strong>rövidebb vízfolyási idő × becsült zuhany-vízhozam</strong></p>
-        <p>A V0 7,6–9,5 liter/perces tartománnyal számol. Ez egy víztakarékos zuhanyfej hivatalos felső értéke és egy szabványos zuhanyfej jellemző felső értéke közötti gyors becslési tartomány. A tényleges érték a zuhanyfejtől és a víznyomástól eltérhet.</p>
-
-        <h2 class="h4 mt-5">Ivóvíz-egyenérték</h2>
-        <p>Közműves víz esetén a felület tudatosítja, hogy ivóvíz-minőségű vezetékes vízről van szó. Az ember-nap összehasonlítás 2 liter/fő/nap kerek szemléltető értékkel készül.</p>
-        <div class="alert alert-light border">
-          Ez mennyiségi összehasonlítás. A kevesebbet használt vezetékes víz nem kerül automatikusan más emberekhez, és a 2 liter nem személyre szabott egészségügyi előírás.
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <span class="section-icon"><i class="bi bi-calculator"></i></span>
+          <div>
+            <span class="text-primary text-uppercase small fw-semibold">Átlátható számítás</span>
+            <h1 class="h2 mt-1 mb-0">Hogyan számol a V0 prototípus?</h1>
+          </div>
         </div>
+        <p class="lead text-body-secondary mb-5">A jelenlegi változat gyors becslést ad az egynapos, rövidebb zuhanyzási kihívás vízhatásáról.</p>
 
-        <h2 class="h4 mt-5">Mit jelent a „gyors becslés”?</h2>
-        <ul>
-          <li>nem mérőóra-adat;</li>
-          <li>nem pontos zuhanyfej-mérés;</li>
-          <li>a felhasználó hozzávetőleges válaszából és dokumentált átlagokból készül;</li>
-          <li>kerekített tartományt mutat, nem hamis pontosságot.</li>
-        </ul>
+        <section class="card app-inner-card border-0 mb-4">
+          <div class="card-body p-4">
+            <h2 class="h4 mb-3">A vízmennyiség becslése</h2>
+            <p>A becsült csökkentés képlete:</p>
+            <p class="document-formula border rounded-3 p-3 mb-3"><strong>rövidebb vízfolyási idő × becsült zuhany-vízhozam</strong></p>
+            <p class="text-body-secondary mb-0">A V0 7,6–9,5 liter/perces tartománnyal számol. A tényleges érték a zuhanyfejtől és a víznyomástól eltérhet.</p>
+          </div>
+        </section>
 
-        <h2 class="h4 mt-5">Felhasznált források</h2>
-        <ul>
-          <li><a href="https://www.epa.gov/sites/production/files/2017-01/documents/ws-products-spec-showerheads.pdf">US EPA WaterSense – zuhanyfejek specifikációja</a></li>
-          <li><a href="https://www.epa.gov/watersense/showerheads">US EPA WaterSense – szabványos és víztakarékos zuhanyfejek</a></li>
-          <li><a href="https://www.efsa.europa.eu/hu/safe2eat/your-nutrition-needs">EFSA – táplálkozási szükségletek és ivóvíz</a></li>
-        </ul>
+        <section class="card app-inner-card border-0 mb-4">
+          <div class="card-body p-4">
+            <h2 class="h4 mb-3">Ivóvíz-egyenérték</h2>
+            <p>Közműves víz esetén a felület tudatosítja, hogy ivóvíz-minőségű vezetékes vízről van szó. Az ember-nap összehasonlítás 2 liter/fő/nap kerek szemléltető értékkel készül.</p>
+            <div class="impact-callout rounded-3 p-3 d-flex gap-3 align-items-start">
+              <i class="bi bi-info-circle text-primary fs-5"></i>
+              <p class="small mb-0">Ez mennyiségi összehasonlítás. A kevesebbet használt vezetékes víz nem kerül automatikusan más emberekhez, és a 2 liter nem személyre szabott egészségügyi előírás.</p>
+            </div>
+          </div>
+        </section>
 
-        <p class="small text-body-secondary mt-5">Modellverzió: shower-water-v0.1.0. Utolsó módszertani frissítés: 2026. augusztus 3.</p>
-        <a class="btn btn-primary" href="./index.html">Vissza az alkalmazáshoz</a>
+        <section class="card app-inner-card border-0 mb-4">
+          <div class="card-body p-4">
+            <h2 class="h4 mb-3">Mit jelent a „gyors becslés”?</h2>
+            <ul class="vstack gap-2 text-body-secondary mb-0">
+              <li>nem mérőóra-adat;</li>
+              <li>nem pontos zuhanyfej-mérés;</li>
+              <li>a felhasználó hozzávetőleges válaszából és dokumentált átlagokból készül;</li>
+              <li>kerekített tartományt mutat, nem hamis pontosságot.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="card app-inner-card border-0 mb-4">
+          <div class="card-body p-4">
+            <h2 class="h4 mb-3">Felhasznált források</h2>
+            <ul class="vstack gap-2 mb-0">
+              <li><a href="https://www.epa.gov/sites/production/files/2017-01/documents/ws-products-spec-showerheads.pdf">US EPA WaterSense – zuhanyfejek specifikációja</a></li>
+              <li><a href="https://www.epa.gov/watersense/showerheads">US EPA WaterSense – szabványos és víztakarékos zuhanyfejek</a></li>
+              <li><a href="https://www.efsa.europa.eu/hu/safe2eat/your-nutrition-needs">EFSA – táplálkozási szükségletek és ivóvíz</a></li>
+            </ul>
+          </div>
+        </section>
+
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mt-5">
+          <p class="small text-body-secondary mb-0">Modellverzió: shower-water-v0.1.0 · Frissítve: 2026. augusztus 3.</p>
+          <a class="btn btn-primary d-flex align-items-center justify-content-center gap-2" href="./index.html">
+            <i class="bi bi-arrow-left"></i>
+            Vissza az alkalmazáshoz
+          </a>
+        </div>
       </div>
     </article>
   </main>
