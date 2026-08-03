@@ -4,7 +4,48 @@ Személyes víz- és energiahasználati hatásmérő webalkalmazás.
 
 ## Állapot
 
-V0 prototípus fejlesztés alatt.
+A `v0-prototype` ág tartalmazza az első megnyitható függőleges prototípust:
+
+- kétkérdéses, mérés nélküli gyors felmérés;
+- személyre szabott egynapos zuhanykihívás;
+- önbevallásos visszajelzés;
+- becsült vízeredmény tartományban;
+- ivóvíz-minőségű vezetékesvíz-értelmezés;
+- ember-nap ivóvíz-egyenérték;
+- mobilos megosztás vagy linkmásolás;
+- háromnapos folytatás felajánlása;
+- LocalStorage-alapú állapotmentés;
+- módszertani és adatvédelmi oldal.
+
+Az első szelet jelenleg a vízhatást számolja. A vízmelegítési energia becslése a következő fejlesztési lépés.
+
+## Helyi futtatás
+
+A repository gyökerében:
+
+```bash
+npm run serve
+```
+
+Ezután nyisd meg:
+
+```text
+http://localhost:8080
+```
+
+A JSON-adatfájlok betöltése miatt az `app/index.html` fájlt ne közvetlenül `file://` útvonalról nyisd meg.
+
+## Ellenőrzés
+
+```bash
+npm test
+```
+
+A GitHub Actions ezen felül ellenőrzi:
+
+- a JavaScript-fájlok szintaxisát;
+- a számítási egységteszteket;
+- a JSON-adatfájlok érvényességét.
 
 ## Frontend technológiai alap
 
