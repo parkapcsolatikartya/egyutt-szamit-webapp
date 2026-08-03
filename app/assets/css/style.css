@@ -1,11 +1,110 @@
 /*
  * Együtt számít – projektspecifikus stílusok
  *
- * Kötelező Bootstrap-first szabály:
- * 1. Először Bootstrap komponenseket és utility osztályokat használunk.
- * 2. Ebbe a fájlba csak olyan célzott, egyedi szabály kerülhet,
- *    amely Bootstrap segítségével nem oldható meg ésszerűen.
- * 3. Nem implementáljuk újra a Bootstrap által már biztosított
- *    általános elrendezési, spacing-, tipográfiai vagy komponensszabályokat.
- * 4. Inline style és indokolatlan !important használata kerülendő.
+ * Bootstrap-first: ebben a fájlban csak a márka és az egyedi
+ * eredmény-/kihíváselemek célzott szabályai szerepelnek.
  */
+
+:root {
+  --es-primary: #0b6b57;
+  --es-primary-rgb: 11, 107, 87;
+  --es-water: #dff5f0;
+  --es-surface: #f5f8f7;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--es-surface);
+}
+
+.app-shell {
+  width: min(100% - 2rem, 760px);
+  margin-inline: auto;
+}
+
+.app-progress {
+  height: 0.3rem;
+}
+
+.progress-bar {
+  background-color: var(--es-primary);
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--es-primary);
+  --bs-btn-border-color: var(--es-primary);
+  --bs-btn-hover-bg: #095847;
+  --bs-btn-hover-border-color: #095847;
+  --bs-btn-active-bg: #074c3e;
+  --bs-btn-active-border-color: #074c3e;
+}
+
+.text-primary {
+  color: var(--es-primary) !important;
+}
+
+.brand-mark {
+  color: var(--es-primary);
+  font-size: 1.25rem;
+}
+
+.card {
+  border-radius: 1.5rem;
+}
+
+.step-number,
+.challenge-icon,
+.invite-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  color: var(--es-primary);
+  background: rgba(var(--es-primary-rgb), 0.12);
+  font-weight: 700;
+}
+
+.step-number-large {
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: 1.25rem;
+}
+
+.challenge-icon,
+.invite-icon {
+  width: 4rem;
+  height: 4rem;
+  font-size: 1.75rem;
+}
+
+.result-card {
+  border-top: 0.35rem solid var(--es-primary) !important;
+}
+
+.result-block {
+  background: var(--es-water);
+}
+
+.form-check:has(.form-check-input:checked) {
+  border-color: var(--es-primary) !important;
+  background: rgba(var(--es-primary-rgb), 0.06);
+}
+
+.form-check-input:checked {
+  background-color: var(--es-primary);
+  border-color: var(--es-primary);
+}
+
+.btn,
+.form-control,
+.form-select,
+.form-check {
+  min-height: 3rem;
+}
+
+@media (min-width: 768px) {
+  .app-shell {
+    width: min(100% - 3rem, 820px);
+  }
+}
