@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Egyetlen apró változtatás becsült víz- és energiahatása, érthetően megmutatva.">
+  <meta property="og:title" content="Együtt számít – egynapos kihívás">
+  <meta property="og:description" content="Próbálj ki egyetlen kis változtatást, és nézd meg, hogyan adódhat össze sok ember hatása.">
+  <meta property="og:type" content="website">
+  <title>Együtt számít – egynapos kihívás</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+  <header class="border-bottom bg-white">
+    <nav class="navbar app-shell" aria-label="Fő navigáció">
+      <div class="container-fluid px-0">
+        <a class="navbar-brand fw-semibold d-flex align-items-center gap-2" href="./index.html">
+          <span class="brand-mark" aria-hidden="true">●</span>
+          Együtt számít
+        </a>
+        <button class="btn btn-sm btn-outline-secondary" type="button" data-reset-app>Újrakezdés</button>
+      </div>
+    </nav>
+  </header>
+
+  <div class="progress rounded-0 app-progress" role="progressbar" aria-label="A folyamat állapota" aria-valuemin="0" aria-valuemax="100">
+    <div id="app-progress" class="progress-bar" aria-valuenow="5"></div>
+  </div>
+
+  <main class="app-shell py-4 py-md-5">
+    <div id="app-error" class="alert alert-danger d-none" role="alert"></div>
+
+    <section id="screen-intro" class="app-screen">
+      <div class="card border-0 shadow-sm overflow-hidden">
+        <div class="card-body p-4 p-md-5">
+          <span class="badge text-bg-primary-subtle text-primary-emphasis rounded-pill mb-3">V0 prototípus</span>
+          <h1 class="display-6 fw-semibold mb-3" tabindex="-1">Egyetlen kis lépés is számít</h1>
+          <p class="lead text-body-secondary mb-4">Próbálj ki egy könnyen vállalható változtatást egyetlen napig. Megmutatjuk a becsült hatását, majd eldöntheted, folytatod-e.</p>
+
+          <div class="row g-3 mb-4" aria-label="A folyamat három lépése">
+            <div class="col-12 col-md-4">
+              <div class="h-100 rounded-4 bg-body-tertiary p-3">
+                <span class="step-number">1</span>
+                <h2 class="h6 mt-3">Két rövid kérdés</h2>
+                <p class="small text-body-secondary mb-0">Nem kell mérőóra, számla vagy műszaki adat.</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="h-100 rounded-4 bg-body-tertiary p-3">
+                <span class="step-number">2</span>
+                <h2 class="h6 mt-3">Egynapos próba</h2>
+                <p class="small text-body-secondary mb-0">Egyetlen pontos, könnyen kipróbálható változtatás.</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="h-100 rounded-4 bg-body-tertiary p-3">
+                <span class="step-number">3</span>
+                <h2 class="h6 mt-3">Érthető eredmény</h2>
+                <p class="small text-body-secondary mb-0">Liter helyett azt is látod, mit jelent a mennyiség.</p>
+              </div>
+            </div>
+          </div>
+
+          <button id="start-button" class="btn btn-primary btn-lg w-100" type="button">Elkezdem az egynapos kihívást</button>
+          <p class="small text-body-secondary text-center mt-3 mb-0">Regisztráció nélkül. Az adatok ezen az eszközön maradnak.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-questionnaire" class="app-screen d-none">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-4 p-md-5">
+          <span class="text-primary fw-semibold small">1. lépés</span>
+          <h1 class="h2 mt-2 mb-2" tabindex="-1">Nézzük meg a jelenlegi szokásodat</h1>
+          <p class="text-body-secondary mb-4">A válaszaidból gyors, kerekített becslést készítünk.</p>
+          <form id="question-form" novalidate>
+            <div id="question-fields"></div>
+            <button class="btn btn-primary btn-lg w-100" type="submit">Kérem a mai kihívást</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-challenge" class="app-screen d-none">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-4 p-md-5">
+          <span class="text-primary fw-semibold small">2. lépés</span>
+          <h1 id="challenge-title" class="h2 mt-2 mb-3" tabindex="-1">A mai apró lépésed</h1>
+          <p id="challenge-text" class="lead mb-4"></p>
+          <div class="alert alert-primary border-0 mb-4">
+            <strong>Ha ma sikerül:</strong>
+            <span id="challenge-estimate"></span>
+          </div>
+          <button id="accept-challenge" class="btn btn-primary btn-lg w-100" type="button">Vállalom egy napra</button>
+          <button class="btn btn-link text-secondary w-100 mt-2" type="button" data-reset-app>Most nem</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-active" class="app-screen d-none">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-4 p-md-5 text-center">
+          <span class="challenge-icon" aria-hidden="true">✓</span>
+          <h1 class="h2 mt-3 mb-3" tabindex="-1">A mai kihívás elindult</h1>
+          <p id="active-text" class="lead text-body-secondary mb-4"></p>
+          <div class="alert alert-light border text-start small">
+            A V0 tesztverzióban nem kell 24 órát várnod: a folyamat kipróbálásához azonnal is megadhatod az eredményt.
+          </div>
+          <button id="checkin-button" class="btn btn-primary btn-lg w-100" type="button">Kipróbáltam – megadom az eredményt</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-checkin" class="app-screen d-none">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-4 p-md-5">
+          <span class="text-primary fw-semibold small">3. lépés</span>
+          <h1 class="h2 mt-2 mb-3" tabindex="-1">Hogyan sikerült?</h1>
+          <p class="text-body-secondary">Nem kell pontosan mérned. Válaszd ki azt, amelyik a legközelebb áll a tapasztalatodhoz.</p>
+          <form id="checkin-form">
+            <label class="form-label fw-semibold" for="minutes-achieved">A mai zuhanyzás körülbelül ennyivel lett rövidebb:</label>
+            <select id="minutes-achieved" class="form-select form-select-lg mb-4" required></select>
+            <button class="btn btn-primary btn-lg w-100" type="submit">Megnézem a becsült hatást</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-result" class="app-screen d-none">
+      <div class="card border-0 shadow-sm result-card">
+        <div class="card-body p-4 p-md-5">
+          <span class="badge text-bg-success-subtle text-success-emphasis rounded-pill mb-3">Gyors becslés</span>
+          <h1 id="result-heading" class="h2 mb-4" tabindex="-1">A mai becsült eredményed</h1>
+
+          <div class="result-block rounded-4 p-4 mb-3">
+            <p id="result-water" class="fs-4 fw-semibold mb-0"></p>
+          </div>
+
+          <div class="rounded-4 bg-body-tertiary p-4 mb-3">
+            <p class="text-uppercase small fw-semibold text-body-secondary mb-2">Mit jelent ez?</p>
+            <p id="result-equivalent" class="fs-5 mb-0"></p>
+          </div>
+
+          <p id="result-note" class="small text-body-secondary"></p>
+
+          <div class="accordion mb-4" id="methodology-accordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#methodology-collapse" aria-expanded="false" aria-controls="methodology-collapse">Hogyan számoltuk?</button>
+              </h2>
+              <div id="methodology-collapse" class="accordion-collapse collapse" data-bs-parent="#methodology-accordion">
+                <div class="accordion-body small text-body-secondary">
+                  A gyors becslés 7,6–9,5 liter/perces zuhany-vízhozammal számol. Az ivóvíz-egyenértékhez 2 liter/fő/nap kerek szemléltető értéket használunk. A tényleges érték a zuhanyfejtől, a víznyomástól és a használattól eltérhet.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button id="result-continue" class="btn btn-primary btn-lg w-100" type="button">Tovább</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-invite" class="app-screen d-none">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-4 p-md-5 text-center">
+          <span class="invite-icon" aria-hidden="true">↗</span>
+          <h1 class="h2 mt-3 mb-3" tabindex="-1">Add tovább a kihívást</h1>
+          <p id="invite-summary" class="lead text-body-secondary mb-4"></p>
+          <button id="share-button" class="btn btn-primary btn-lg w-100" type="button">Meghívok valakit</button>
+          <button id="skip-share" class="btn btn-link text-secondary w-100 mt-2" type="button">Most nem</button>
+          <p id="share-feedback" class="small text-body-secondary mt-3 mb-0" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-next-step" class="app-screen d-none">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-4 p-md-5 text-center">
+          <span class="step-number step-number-large">3</span>
+          <h1 class="h2 mt-3 mb-3" tabindex="-1">Folytassuk három napig?</h1>
+          <p id="next-step-summary" class="lead text-body-secondary mb-4"></p>
+          <button id="accept-three-days" class="btn btn-primary btn-lg w-100" type="button">Vállalom a 3 napos kihívást</button>
+          <button class="btn btn-link text-secondary w-100 mt-2" type="button" data-reset-app>Most befejezem</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-shell pb-4">
+    <div class="d-flex flex-column flex-sm-row justify-content-between gap-2 border-top pt-3 small text-body-secondary">
+      <span>Együtt számít – V0 prototípus</span>
+      <span class="d-flex gap-3">
+        <a class="link-secondary" href="./methodology.html">Módszertan</a>
+        <a class="link-secondary" href="./privacy.html">Adatvédelem</a>
+      </span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
