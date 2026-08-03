@@ -2,6 +2,18 @@
 
 Személyes víz- és energiahasználati hatásmérő webalkalmazás.
 
+## Online tesztverzió
+
+Az aktuális `v0-prototype` ág közvetlen fejlesztői előnézete:
+
+https://raw.githack.com/parkapcsolatikartya/egyutt-szamit-webapp/v0-prototype/app/index.html
+
+A GitHub Pages automatikus közzététele is elő van készítve ezen a címen:
+
+https://parkapcsolatikartya.github.io/egyutt-szamit-webapp/
+
+A GitHub Pages első repositoryszintű aktiválása külön GitHub-beállítást igényelhet. Addig a közvetlen fejlesztői előnézet használható.
+
 ## Állapot
 
 A `v0-prototype` ág tartalmazza az első megnyitható függőleges prototípust:
