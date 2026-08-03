@@ -1,0 +1,41 @@
+{
+  "version": "0.1.0",
+  "questions": [
+    {
+      "id": "shower_duration_minutes",
+      "topic": "shower",
+      "type": "number",
+      "label": "Általában hány percig tart egy zuhanyzásod?",
+      "help": "Elég egy hozzávetőleges érték. Nem kell megmérned.",
+      "min": 3,
+      "max": 30,
+      "step": 1,
+      "defaultValue": 8,
+      "unit": "perc",
+      "required": true
+    },
+    {
+      "id": "water_source",
+      "topic": "water_source",
+      "type": "radio",
+      "label": "Milyen vizet használsz a zuhanyzáshoz?",
+      "help": "A legtöbb otthonban a zuhany a közműves ivóvízhálózatról kap vizet.",
+      "required": true,
+      "defaultValue": "mains",
+      "options": [
+        {
+          "value": "mains",
+          "label": "Vezetékes vizet"
+        },
+        {
+          "value": "other",
+          "label": "Saját kutat vagy más vízforrást"
+        },
+        {
+          "value": "unknown",
+          "label": "Nem tudom"
+        }
+      ]
+    }
+  ]
+}
