@@ -40,6 +40,16 @@ body {
   min-height: 100vh;
 }
 
+/*
+ * A képernyőváltáskor programból fókuszált címsorok nem interaktív elemek.
+ * A fókusz megmarad a képernyőolvasók számára, de nem jelenik meg rajtuk
+ * böngésző által rajzolt keret. A valódi vezérlők fókuszjelzését nem érinti.
+ */
+.app-screen :is(h1, h2)[tabindex="-1"]:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 .app-body {
   background:
     radial-gradient(circle at 78% 8%, rgba(var(--es-water-rgb), 0.08), transparent 30rem),
