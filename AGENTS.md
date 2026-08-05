@@ -47,6 +47,7 @@ Ez a szabály a teljes projektre vonatkozik: minden jelenlegi és későbbi olda
 - Ellenőrizetlen fogyasztási érték, tarifa, kibocsátási tényező vagy képlet nem kerülhet kész tényként a kódba.
 - Bizonytalan értéket tartományként kell kezelni; hamis pontosság tilos.
 - A felület nem kelthet bűntudatot, és nem javasolhat egészséget vagy alapvető higiéniát veszélyeztető változtatást.
+- Látványtervben szereplő szám, partnerlogó vagy együttműködés nem kerülhet a működő felületre külön tartalmi ellenőrzés nélkül.
 
 ## 6. Fejlesztési munkafolyamat
 
@@ -65,3 +66,42 @@ Felületi probléma esetén ezt a sorrendet kell követni:
 4. Csak ezután készülhet célzott saját szabály a `style.css` fájlban.
 
 Ha saját CSS készül, rövid megjegyzésben vagy a commit leírásában indokolni kell, miért nem volt elegendő a Bootstrap.
+
+## 8. Kötelező vizuális irány
+
+A további frontend-fejlesztés elsődleges vizuális rendszere világos, levegős és barátságos. A korábbi sötét admin-dashboard vagy „személyes hatásközpont” megjelenés történeti prototípus, nem aktuális irány.
+
+- Fehér vagy nagyon világos háttér használata.
+- Elsődleges akcentusok: kék, türkiz, mentazöld.
+- Meleg narancs vagy sárga csak kisebb kiemelésként.
+- Az illusztrációk stílusa: könnyű 3D vector, isometric vector vagy soft 3D UI illustration.
+- Egységes perspektíva, fényirány, árnyék, részletesség, karakterarány és színpaletta szükséges.
+- Eltérő illusztrációs családok keverése kerülendő.
+- A 3D grafika csak szemléltető és márkaelem; nem helyettesíti a szemantikus HTML-t, a Bootstrap komponenst vagy a funkcionális feliratot.
+- Funkcionális ikonhoz elsőként Bootstrap Icons használatos.
+
+A részletes irányt a Drive-források között található `09 – Vizuális rendszer és képi asset irányelvek` dokumentum rögzíti.
+
+## 9. Képi assetek és teljesítmény
+
+- Egyszerű ikonhoz és egyszerű vector elemhez elsőként optimalizált SVG használatos.
+- Összetett 3D illusztrációnál a ténylegesen kisebb és megfelelő minőségű SVG, WebP vagy AVIF választandó; az SVG nem automatikusan a legkisebb.
+- PNG csak dokumentált technikai indokkal használható.
+- Nagy kép base64 formában nem ágyazható HTML-be vagy CSS-be.
+- Ugyanazt az ikont vagy illusztrációt ugyanazon fájlútvonalról és URL-ről kell újrahasználni.
+- Azonos asset több külön fájlnéven történő duplikálása tilos.
+- Hajtás alatti képen `loading="lazy"` használatos.
+- Minden képen legyen `width` és `height` attribútum.
+- Raster képnél szükség szerint `srcset`, `sizes` és `decoding="async"` használatos.
+- A hajtás felett egyszerre legfeljebb egy nagy, eager betöltésű hero illusztráció legyen.
+- Verziózott vagy tartalomhash-alapú statikus asset hosszú cache-élettartammal szolgálható ki; változáskor új fájlnév szükséges.
+
+Irányadó célméretek:
+
+- egyszerű UI-ikon: 1–8 KB;
+- összetettebb saját ikon: 5–15 KB;
+- kis 3D illusztráció: 20–70 KB;
+- közepes illusztráció: 50–120 KB;
+- hero illusztráció: lehetőleg 80–180 KB.
+
+A célméret nem írhatja felül az olvashatóságot és a vizuális minőséget. A végleges formátumot valós fájlméret- és böngészős ellenőrzés alapján kell kiválasztani.
