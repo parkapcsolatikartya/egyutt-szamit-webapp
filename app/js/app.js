@@ -475,10 +475,10 @@ function restoreView() {
 function setPhase(phase) {
   state.phase = phase;
   saveState();
-  showScreen(phase);
+  showScreen(phase, { focusHeading: true });
 }
 
-function showScreen(screenId) {
+function showScreen(screenId, { focusHeading = false } = {}) {
   SCREEN_IDS.forEach((id) => {
     $(`#screen-${id}`)?.classList.toggle('d-none', id !== screenId);
   });
@@ -497,7 +497,9 @@ function showScreen(screenId) {
   elements.progress.style.width = `${progress}%`;
   elements.progress.setAttribute('aria-valuenow', String(progress));
 
-  $(`#screen-${screenId} h1, #screen-${screenId} h2`)?.focus({ preventScroll: true });
+  if (focusHeading) {
+    $(`#screen-${screenId} h1, #screen-${screenId} h2`)?.focus({ preventScroll: true });
+  }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
