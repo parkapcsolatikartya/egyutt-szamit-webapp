@@ -1,0 +1,219 @@
+{
+  "version": "0.2.0",
+  "challenges": [
+    {
+      "id": "shorter-shower",
+      "slug": "zuhanyzas",
+      "categoryId": "water",
+      "status": "active",
+      "visualKey": "shorter-shower",
+      "title": "Rövidebb zuhanyzás",
+      "cardDescription": "Figyeld meg, le tudsz-e faragni egy keveset a víz folyási idejéből úgy, hogy a tisztálkodás kényelmes maradjon.",
+      "detailTitle": "A következő zuhanyzásnál rövidebb ideig folyatom a vizet",
+      "detailDescription": "A cél nem a kényelmetlen gyorsaság, hanem az, hogy megfigyeld, hol csökkenthető egy kicsit a feleslegesen folyó víz ideje.",
+      "imageAlt": "Izometrikus fürdőszobai jelenet zuhanyzóval",
+      "resultMode": "shower-water",
+      "checkinType": "minutes",
+      "modelVersion": "shower-water-v0.1.0",
+      "safetyNote": "A szükséges tisztálkodás és higiénia mindig elsőbbséget élvez.",
+      "questions": [
+        {
+          "id": "shower_duration_minutes",
+          "type": "number",
+          "label": "Általában hány percig tart egy zuhanyzásod?",
+          "help": "Elég egy hozzávetőleges érték. Nem kell megmérned.",
+          "min": 3,
+          "max": 30,
+          "step": 1,
+          "defaultValue": 8,
+          "unit": "perc",
+          "required": true
+        },
+        {
+          "id": "water_source",
+          "type": "radio",
+          "label": "Milyen vizet használsz a zuhanyzáshoz?",
+          "help": "A legtöbb otthonban a zuhany a közműves ivóvízhálózatról kap vizet.",
+          "defaultValue": "mains",
+          "required": true,
+          "options": [
+            { "value": "mains", "label": "Vezetékes vizet" },
+            { "value": "other", "label": "Saját kutat vagy más vízforrást" },
+            { "value": "unknown", "label": "Nem tudom" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dishwashing-flow",
+      "slug": "mosogatas",
+      "categoryId": "water",
+      "status": "active",
+      "visualKey": "dishwashing",
+      "title": "Mosogatás kevesebb folyóvízzel",
+      "cardDescription": "Próbáld ki, hogyan használhatsz kevesebb folyóvizet mosogatás közben.",
+      "detailTitle": "Mosogatás közben kevesebb folyóvizet használok",
+      "detailDescription": "A cél a folyamatosan folyó víz idejének csökkentése úgy, hogy az edények tisztasága ne romoljon.",
+      "imageAlt": "Izometrikus konyhai jelenet kézi mosogatással",
+      "resultMode": "qualitative",
+      "checkinType": "completion",
+      "modelVersion": "dishwashing-behaviour-v0.1.0",
+      "estimateText": "Ez a próba a folyamatosan folyó víz idejének megfigyelésében segít. A V0 ehhez még nem jelenít meg literes becslést.",
+      "safetyNote": "Az alapos tisztítás és az élelmiszer-biztonság nem csökkenthető a víztakarékosság kedvéért.",
+      "questions": [
+        {
+          "id": "dishwashing_mode",
+          "type": "radio",
+          "label": "Általában hogyan mosogatsz?",
+          "defaultValue": "mixed",
+          "required": true,
+          "options": [
+            { "value": "hand", "label": "Többnyire kézzel" },
+            { "value": "mixed", "label": "Kézzel és mosogatógéppel is" },
+            { "value": "machine", "label": "Többnyire mosogatógéppel" }
+          ]
+        },
+        {
+          "id": "dishwashing_water_flow",
+          "type": "radio",
+          "label": "Kézi mosogatásnál mennyire jellemző, hogy folyamatosan folyik a víz?",
+          "help": "Akkor is válaszolhatsz, ha csak ritkán mosogatsz kézzel.",
+          "defaultValue": "sometimes",
+          "required": true,
+          "options": [
+            { "value": "often", "label": "Gyakran" },
+            { "value": "sometimes", "label": "Néha" },
+            { "value": "rarely", "label": "Ritkán vagy soha" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "full-washer-load",
+      "slug": "mosas",
+      "categoryId": "water",
+      "status": "active",
+      "visualKey": "full-washer",
+      "title": "Mosás jól kihasznált töltettel",
+      "cardDescription": "Indítsd a mosást a programhoz és a gép ajánlott kapacitásához illő, jól kihasznált töltettel.",
+      "detailTitle": "A következő mosást jól kihasznált töltettel indítom",
+      "detailDescription": "A cél nem a gép túlterhelése, hanem az, hogy ne induljon el kevés ruhával, amikor a mosás biztonságosan elhalasztható.",
+      "imageAlt": "Izometrikus mosókonyhai jelenet mosógéppel és ruhákkal",
+      "resultMode": "qualitative",
+      "checkinType": "completion",
+      "modelVersion": "washer-load-behaviour-v0.1.0",
+      "estimateText": "A jól kihasznált töltet csökkentheti a szükségtelen mosási ciklusok számát. A V0 ehhez még nem számol liter- vagy kWh-értéket.",
+      "safetyNote": "A gép gyártója által megadott kapacitást ne lépd túl, és a különleges ruhák mosási előírásait tartsd be.",
+      "questions": [
+        {
+          "id": "washer_fill_level",
+          "type": "radio",
+          "label": "Mennyire szokott megtelni a mosógép egy átlagos mosásnál?",
+          "defaultValue": "variable",
+          "required": true,
+          "options": [
+            { "value": "low", "label": "Gyakran kevés ruha kerül bele" },
+            { "value": "variable", "label": "Változó" },
+            { "value": "good", "label": "Többnyire jól kihasznált a töltet" }
+          ]
+        },
+        {
+          "id": "washer_can_wait",
+          "type": "radio",
+          "label": "A következő mosás szükség esetén várhat egy kicsit?",
+          "defaultValue": "yes",
+          "required": true,
+          "options": [
+            { "value": "yes", "label": "Igen" },
+            { "value": "no", "label": "Nem, most szükség van a tiszta ruhákra" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "task-lighting",
+      "slug": "vilagitas",
+      "categoryId": "electricity",
+      "status": "active",
+      "visualKey": "task-lighting",
+      "title": "Célzott világítás",
+      "cardDescription": "Olvasáshoz vagy esti tevékenységhez próbáld ki a helyi világítást a teljes szoba erős megvilágítása helyett.",
+      "detailTitle": "Este csak ott világítok, ahol szükséges",
+      "detailDescription": "Próbáld ki, hogy az esti tevékenységedhez elegendő-e egy kisebb, célzott fényforrás a teljes helyiség erős megvilágítása helyett.",
+      "imageAlt": "Izometrikus esti szobajelenet célzott olvasólámpával",
+      "resultMode": "qualitative",
+      "checkinType": "completion",
+      "modelVersion": "task-lighting-behaviour-v0.1.0",
+      "estimateText": "A próba azt segít megfigyelni, mikor elegendő a helyi világítás. A V0 még nem kér izzó-teljesítményt, ezért nem mutat kWh-becslést.",
+      "safetyNote": "Mindig legyen elegendő fény a kényelmes és biztonságos olvasáshoz, közlekedéshez vagy munkához.",
+      "questions": [
+        {
+          "id": "task_lamp_available",
+          "type": "radio",
+          "label": "Van kisebb lámpád, amely közvetlenül a tevékenység helyét világítja meg?",
+          "defaultValue": "yes",
+          "required": true,
+          "options": [
+            { "value": "yes", "label": "Igen" },
+            { "value": "no", "label": "Nincs külön helyi lámpám" }
+          ]
+        },
+        {
+          "id": "evening_activity",
+          "type": "radio",
+          "label": "Melyik esti helyzetben próbálnád ki?",
+          "defaultValue": "reading",
+          "required": true,
+          "options": [
+            { "value": "reading", "label": "Olvasás" },
+            { "value": "screen", "label": "Televízió vagy képernyő használata" },
+            { "value": "other", "label": "Más nyugodt esti tevékenység" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gentle-cooling",
+      "slug": "legkondicionalas",
+      "categoryId": "electricity",
+      "status": "active",
+      "visualKey": "gentle-cooling",
+      "title": "Kíméletesebb hűtés",
+      "cardDescription": "Próbálj ki egy kevésbé intenzív beállítást vagy rövidebb működési időt, amikor ez kényelmes és biztonságos.",
+      "detailTitle": "A hűtést ma kíméletesebb beállítással használom",
+      "detailDescription": "A cél egy kis, kényelmes változtatás: magasabb beállított hőmérséklet, rövidebb üzemidő vagy előzetes passzív hűtés.",
+      "imageAlt": "Izometrikus nappali légkondicionálóval és növényekkel",
+      "resultMode": "qualitative",
+      "checkinType": "completion",
+      "modelVersion": "cooling-behaviour-v0.1.0",
+      "estimateText": "A pontos áramhatás a készüléktől, az időjárástól és a lakástól függ. A V0 ezért ennél a próbánál még nem jelenít meg kWh-becslést.",
+      "safetyNote": "Hőségben, betegség, várandósság, idős kor vagy más kockázat esetén a biztonságos hőmérséklet fontosabb a takarékosságnál.",
+      "questions": [
+        {
+          "id": "air_conditioner_use",
+          "type": "radio",
+          "label": "Használsz légkondicionálót otthon?",
+          "defaultValue": "yes",
+          "required": true,
+          "options": [
+            { "value": "yes", "label": "Igen" },
+            { "value": "sometimes", "label": "Csak ritkán" },
+            { "value": "no", "label": "Nem" }
+          ]
+        },
+        {
+          "id": "cooling_change",
+          "type": "radio",
+          "label": "Melyik kis változtatás tűnik most vállalhatónak?",
+          "defaultValue": "temperature",
+          "required": true,
+          "options": [
+            { "value": "temperature", "label": "Egy fokkal magasabb beállítás" },
+            { "value": "shorter", "label": "Rövidebb működési idő" },
+            { "value": "passive", "label": "Árnyékolás vagy esti szellőztetés először" }
+          ]
+        }
+      ]
+    }
+  ]
+}
