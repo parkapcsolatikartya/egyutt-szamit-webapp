@@ -31,7 +31,7 @@ A `v0-prototype` ág tartalmazza az első megnyitható függőleges prototípust
 
 Az első szelet jelenleg a vízhatást számolja. A vízmelegítési energia becslése a következő fejlesztési lépés.
 
-A jelenlegi sötét frontend történeti prototípus. A következő vizuális fejlesztés jóváhagyott iránya világos, levegős, Bootstrap-first felület kis fájlméretű 3D vector / isometric illusztrációkkal.
+A prototípus jelenlegi megjelenése világos, levegős, Bootstrap-first felület, amely a törtfehér, kék–türkiz, menta és visszafogott meleg sárga színvilágra épül. A későbbi képi assetek könnyű 3D vector / isometric stílusban készülnek.
 
 ## Helyi futtatás
 
