@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Izometrikus víz kategóriaikon"><defs>
+  <linearGradient id="mint" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#BDE8DF"/><stop offset="1" stop-color="#62B8B0"/></linearGradient>
+  <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#80D7E8"/><stop offset="1" stop-color="#2D8FB0"/></linearGradient>
+  <linearGradient id="wood" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFD79A"/><stop offset="1" stop-color="#D99B4D"/></linearGradient>
+  <linearGradient id="warm" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFE797"/><stop offset="1" stop-color="#F2B744"/></linearGradient>
+  <linearGradient id="coral" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFCCAA"/><stop offset="1" stop-color="#EA8A58"/></linearGradient>
+</defs><style>
+  .outline{stroke:#35565D;stroke-width:7;stroke-linejoin:round;stroke-linecap:round}
+  .thin{stroke:#52747A;stroke-width:5;stroke-linejoin:round;stroke-linecap:round}
+  .white{fill:#fff}.mint{fill:url(#mint)}.blue{fill:url(#blue)}.warm{fill:url(#warm)}
+</style><rect width="100%" height="100%" fill="#FFFDF9"/><g>
+<path d="M180 505h380l110 65-380 0z" fill="#E8EEEB"/>
+<path d="M230 430h300v105H230z" class="white outline"/><path d="M530 430l95-55v105l-95 55z" fill="#D9E4E1" class="outline"/>
+<path d="M335 405v-80q0-90 100-90h90" fill="none" stroke="url(#mint)" stroke-width="58" stroke-linecap="round" class="outline"/>
+<path d="M525 235h105v58H525z" class="blue outline"/><path d="M590 290v58" fill="none" class="outline"/>
+<path d="M590 350c-52 65-52 101 0 101s52-36 0-101z" class="blue outline"/>
+<circle cx="315" cy="315" r="58" class="warm outline"/><path d="M315 278v74M278 315h74" class="thin" fill="none"/>
+</g></svg>
