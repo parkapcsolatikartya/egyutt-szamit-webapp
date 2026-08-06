@@ -16,22 +16,54 @@ A GitHub Pages első repositoryszintű aktiválása külön GitHub-beállítást
 
 ## Állapot
 
-A `v0-prototype` ág tartalmazza az első megnyitható függőleges prototípust:
+A `v0-prototype` ág kategóriaalapú, végigjárható fejlesztési prototípust tartalmaz.
 
-- kétkérdéses, mérés nélküli gyors felmérés;
-- személyre szabott egynapos zuhanykihívás;
-- önbevallásos visszajelzés;
-- becsült vízeredmény tartományban;
-- ivóvíz-minőségű vezetékesvíz-értelmezés;
-- ember-nap ivóvíz-egyenérték;
+### Fő kategóriák
+
+- **Víz** – aktív
+- **Áram** – aktív
+- **Földgáz** – látható, de egyelőre előkészítés alatt
+
+### Első választható próbák
+
+**Víz:**
+
+- rövidebb zuhanyzás;
+- mosogatás kevesebb folyóvízzel;
+- mosás jól kihasznált töltettel.
+
+**Áram:**
+
+- célzott világítás;
+- kíméletesebb hűtés és légkondicionálás.
+
+A felhasználói út:
+
+```text
+kategória → próba → rövid személyre szabás → egynapos vállalás
+→ önbevallásos visszajelzés → eredmény → megosztás → háromnapos folytatás
+```
+
+A zuhanyzási próbához ellenőrzött, tartományt adó vízbecslési modell tartozik. A többi próba jelenleg önbevallásos teljesítési eredményt mutat; liter- vagy kWh-értéket csak külön forrásolt és tesztelt számítási modell elkészülte után jelenítünk meg.
+
+További működő elemek:
+
+- hash-alapú, közvetlenül megnyitható kategória- és próbaútvonalak;
+- LocalStorage-alapú állapotmentés;
 - mobilos megosztás vagy linkmásolás;
 - háromnapos folytatás felajánlása;
-- LocalStorage-alapú állapotmentés;
 - módszertani és adatvédelmi oldal.
 
-Az első szelet jelenleg a vízhatást számolja. A vízmelegítési energia becslése a következő fejlesztési lépés.
+## Vizuális rendszer és képi assetek
 
-A prototípus jelenlegi megjelenése világos, levegős, Bootstrap-first felület, amely a törtfehér, kék–türkiz, menta és visszafogott meleg sárga színvilágra épül. A későbbi képi assetek könnyű 3D vector / isometric stílusban készülnek.
+A prototípus világos, levegős, Bootstrap-first felületet használ törtfehér, kék–türkiz, menta és visszafogott meleg akcentusokkal.
+
+A kategória- és kihívásképek egységes 3D isometric stílusúak. A nyolc eredeti, több megabájtos PNG helyett két optimalizált, újrahasznosítható WebP sprite kerül betöltésre:
+
+- egy közös kategória-sprite;
+- egy közös kihívás-sprite.
+
+Így ugyanazt a képfájlt a böngésző több kártyán és képernyőn is a gyorsítótárból használhatja.
 
 ## Helyi futtatás
 
@@ -55,23 +87,21 @@ A JSON-adatfájlok betöltése miatt az `app/index.html` fájlt ne közvetlenül
 npm test
 ```
 
-A GitHub Actions ezen felül ellenőrzi:
+A GitHub Actions ellenőrzi:
 
 - a JavaScript-fájlok szintaxisát;
 - a számítási egységteszteket;
+- a kategória- és kihíváskatalógus konzisztenciáját;
 - a JSON-adatfájlok érvényességét.
 
-## Frontend technológiai és vizuális alap
+## Frontend technológiai alap
 
 - Mobile-first, reszponzív webalkalmazás.
 - Bootstrap 5 a teljes projekt elsődleges CSS frameworkje.
 - A megjelenést elsőként Bootstrap komponensekkel, griddel és utility osztályokkal kell megoldani.
 - Saját CSS csak indokolt, valóban egyedi esetben kerülhet az `app/assets/css/style.css` fájlba.
-- Nem implementálunk újra saját CSS-ben olyan általános szabályt, amelyet a Bootstrap már biztosít.
-- A jóváhagyott vizuális rendszer világos, levegős, kék–türkiz–menta karakterű.
-- A szemléltető képek stílusa könnyű 3D vector / isometric vector / soft 3D UI illustration.
 - Funkcionális ikonokhoz elsőként Bootstrap Icons használatos.
+- A kategóriák és próbák külön JSON-adatállományokból épülnek fel.
 - Az asseteknél kis fájlméret, újrahasználhatóság és cache-hatékonyság kötelező.
-- Ugyanazt az ikont vagy illusztrációt lehetőség szerint ugyanazon URL-ről több helyen használjuk.
 
 A teljes fejlesztési szabályrendszert az [`AGENTS.md`](AGENTS.md) tartalmazza.
