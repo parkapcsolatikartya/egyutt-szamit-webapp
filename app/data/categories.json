@@ -1,0 +1,35 @@
+{
+  "version": "0.2.0",
+  "categories": [
+    {
+      "id": "water",
+      "slug": "viz",
+      "title": "Víz",
+      "description": "Zuhanyzás, mosogatás vagy mosás – válassz egy egyszerű próbát a feleslegesen elfolyó víz csökkentésére.",
+      "buttonLabel": "Megnézem a vízpróbákat",
+      "status": "active",
+      "visualKey": "water",
+      "imageAlt": "Izometrikus illusztráció egy folyó vizű csapról"
+    },
+    {
+      "id": "electricity",
+      "slug": "aram",
+      "title": "Áram",
+      "description": "Világítás, hűtés és mindennapi készülékhasználat – próbálj ki egy kis változtatást az áramfogyasztásodban.",
+      "buttonLabel": "Megnézem az árampróbákat",
+      "status": "active",
+      "visualKey": "electricity",
+      "imageAlt": "Izometrikus illusztráció egy elektromos energiát használó házról"
+    },
+    {
+      "id": "gas",
+      "slug": "foldgaz",
+      "title": "Földgáz",
+      "description": "Fűtés, meleg víz és főzés – biztonságos és könnyen kipróbálható változtatásokkal.",
+      "buttonLabel": "Előkészítés alatt",
+      "status": "coming-soon",
+      "visualKey": "gas",
+      "imageAlt": "Izometrikus illusztráció földgázvezetékről és gázlángról"
+    }
+  ]
+}
