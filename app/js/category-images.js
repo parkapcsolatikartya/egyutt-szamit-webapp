@@ -14,11 +14,11 @@ function replaceCategoryVisuals(root) {
     const image = document.createElement('img');
     image.src = src;
     image.alt = placeholder.getAttribute('aria-label') ?? '';
-    image.width = 384;
-    image.height = 384;
+    image.width = 240;
+    image.height = 240;
     image.loading = 'lazy';
     image.decoding = 'async';
-    image.className = 'img-fluid w-75 mx-auto d-block rounded-4';
+    image.className = 'img-fluid mx-auto d-block rounded-4';
 
     placeholder.replaceWith(image);
   });
