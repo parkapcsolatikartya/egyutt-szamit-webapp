@@ -58,12 +58,9 @@ További működő elemek:
 
 A prototípus világos, levegős, Bootstrap-first felületet használ törtfehér, kék–türkiz, menta és visszafogott meleg akcentusokkal.
 
-A kategória- és kihívásképek egységes 3D isometric stílusúak. A nyolc eredeti, több megabájtos PNG helyett két optimalizált, újrahasznosítható WebP sprite kerül betöltésre:
+A kategóriaképek három külön, internetre optimalizált WebP fájlt használnak normál HTML `<img>` elemként, Bootstrap `ratio`, `img-fluid`, flex és object-fit utilitykkel.
 
-- egy közös kategória-sprite;
-- egy közös kihívás-sprite.
-
-Így ugyanazt a képfájlt a böngésző több kártyán és képernyőn is a gyorsítótárból használhatja.
+A projekt nem használ képi sprite-okat. Az egyes assetek önálló fájlok, így külön cserélhetők, megfelelő `alt`, `width`, `height` és betöltési attribútumokkal kezelhetők.
 
 ## Helyi futtatás
 
