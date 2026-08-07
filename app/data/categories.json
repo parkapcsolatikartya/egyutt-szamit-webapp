@@ -1,11 +1,11 @@
 {
-  "version": "0.2.0",
+  "version": "0.2.1",
   "categories": [
     {
       "id": "water",
       "slug": "viz",
       "title": "Víz",
-      "description": "Zuhanyzás, mosogatás vagy mosás – válassz egy egyszerű próbát a feleslegesen elfolyó víz csökkentésére.",
+      "description": "Zuhanyzás, mosogatás és mosás – fedezd fel, hol használhatnál egy kicsit kevesebb vizet a hétköznapokban.",
       "buttonLabel": "Megnézem a vízpróbákat",
       "status": "active",
       "visualKey": "water",
@@ -15,7 +15,7 @@
       "id": "electricity",
       "slug": "aram",
       "title": "Áram",
-      "description": "Világítás, hűtés és mindennapi készülékhasználat – próbálj ki egy kis változtatást az áramfogyasztásodban.",
+      "description": "Világítás és nyári hűtés – próbálj ki egy apró változtatást az otthoni áramhasználatban.",
       "buttonLabel": "Megnézem az árampróbákat",
       "status": "active",
       "visualKey": "electricity",
@@ -25,7 +25,7 @@
       "id": "gas",
       "slug": "foldgaz",
       "title": "Földgáz",
-      "description": "Fűtés, meleg víz és főzés – biztonságos és könnyen kipróbálható változtatásokkal.",
+      "description": "Fűtés, meleg víz és főzés – egyszerű, biztonságos lehetőségek az otthoni gázhasználat átgondolására.",
       "buttonLabel": "Előkészítés alatt",
       "status": "coming-soon",
       "visualKey": "gas",
