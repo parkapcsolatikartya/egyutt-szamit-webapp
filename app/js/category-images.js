@@ -22,6 +22,16 @@ const CHALLENGE_IMAGES = {
     width: 280,
     height: 187,
   },
+  'task-lighting': {
+    src: './assets/images/aram-vilagitas.webp',
+    width: 280,
+    height: 210,
+  },
+  'gentle-cooling': {
+    src: './assets/images/aram-legkondi.webp',
+    width: 280,
+    height: 187,
+  },
 };
 
 function replaceCategoryVisuals(root) {
