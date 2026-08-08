@@ -1,5 +1,5 @@
 {
-  "version": "0.2.1",
+  "version": "0.2.2",
   "categories": [
     {
       "id": "water",
@@ -25,7 +25,7 @@
       "id": "gas",
       "slug": "foldgaz",
       "title": "Földgáz",
-      "description": "Fűtés, meleg víz és főzés – egyszerű, biztonságos lehetőségek az otthoni gázhasználat átgondolására.",
+      "description": "Fűtés, meleg víz és főzés.",
       "buttonLabel": "Előkészítés alatt",
       "status": "coming-soon",
       "visualKey": "gas",
