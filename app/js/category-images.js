@@ -1,3 +1,5 @@
+import './home-layout.js';
+
 const CATEGORY_IMAGES = {
   water: './assets/images/ikon-viz.webp',
   electricity: './assets/images/ikon-aram.webp',
