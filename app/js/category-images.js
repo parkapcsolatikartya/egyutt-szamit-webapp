@@ -1,9 +1,21 @@
 import './home-layout.js';
 
 const CATEGORY_IMAGES = {
-  water: './assets/images/ikon-viz.webp',
-  electricity: './assets/images/ikon-aram.webp',
-  gas: './assets/images/ikon-foldgaz.webp',
+  water: {
+    src: './assets/images/ikon-viz.webp',
+    width: 240,
+    height: 240,
+  },
+  electricity: {
+    src: './assets/images/ikon-aram.webp',
+    width: 240,
+    height: 240,
+  },
+  gas: {
+    src: './assets/images/ikon-foldgaz.webp',
+    width: 240,
+    height: 240,
+  },
 };
 
 const CHALLENGE_IMAGES = {
@@ -36,35 +48,21 @@ const CHALLENGE_IMAGES = {
   },
 };
 
-function replaceCategoryVisuals(root) {
-  root.querySelectorAll('.category-visual').forEach((placeholder) => {
-    const visualClass = [...placeholder.classList].find((className) => className.startsWith('category-visual-'));
-    const visualKey = visualClass?.replace('category-visual-', '');
-    const src = CATEGORY_IMAGES[visualKey];
-    if (!src) return;
-
-    const image = document.createElement('img');
-    image.src = src;
-    image.alt = placeholder.getAttribute('aria-label') ?? '';
-    image.width = 240;
-    image.height = 240;
-    image.loading = 'lazy';
-    image.decoding = 'async';
-    image.className = 'img-fluid mx-auto d-block rounded-4';
-
-    placeholder.replaceWith(image);
-  });
+export function getCategoryImage(visualKey) {
+  return CATEGORY_IMAGES[visualKey];
 }
 
-function replaceCategoryHeadingVisual(root) {
-  const visualClass = [...root.classList].find((className) => className.startsWith('category-heading-visual-'));
-  const visualKey = visualClass?.replace('category-heading-visual-', '');
-  const src = CATEGORY_IMAGES[visualKey];
-  if (!src) return;
+export function getChallengeImage(visualKey) {
+  return CHALLENGE_IMAGES[visualKey];
+}
+
+export function renderCategoryHeadingImage(root, category) {
+  const asset = getCategoryImage(category.visualKey);
+  if (!asset) return;
 
   const image = document.createElement('img');
-  image.src = src;
-  image.alt = root.getAttribute('aria-label') ?? '';
+  image.src = asset.src;
+  image.alt = category.imageAlt ?? '';
   image.width = 144;
   image.height = 144;
   image.loading = 'eager';
@@ -77,35 +75,13 @@ function replaceCategoryHeadingVisual(root) {
   root.replaceChildren(image);
 }
 
-function replaceChallengeVisuals(root) {
-  root.querySelectorAll('.challenge-visual').forEach((placeholder) => {
-    const visualClass = [...placeholder.classList].find((className) => className.startsWith('challenge-visual-'));
-    const visualKey = visualClass?.replace('challenge-visual-', '');
-    const asset = CHALLENGE_IMAGES[visualKey];
-    if (!asset) return;
-
-    const image = document.createElement('img');
-    image.src = asset.src;
-    image.alt = placeholder.getAttribute('aria-label') ?? '';
-    image.width = asset.width;
-    image.height = asset.height;
-    image.loading = 'lazy';
-    image.decoding = 'async';
-    image.className = asset.imageClasses ?? 'img-fluid w-100 d-block';
-
-    placeholder.replaceWith(image);
-  });
-}
-
-function replaceChallengeDetailVisual(root) {
-  const visualClass = [...root.classList].find((className) => className.startsWith('challenge-detail-visual-'));
-  const visualKey = visualClass?.replace('challenge-detail-visual-', '');
-  const asset = CHALLENGE_IMAGES[visualKey];
+export function renderChallengeDetailImage(root, challenge) {
+  const asset = getChallengeImage(challenge.visualKey);
   if (!asset) return;
 
   const image = document.createElement('img');
   image.src = asset.src;
-  image.alt = root.getAttribute('aria-label') ?? '';
+  image.alt = challenge.imageAlt ?? '';
   image.width = asset.width;
   image.height = asset.height;
   image.loading = 'eager';
@@ -117,41 +93,3 @@ function replaceChallengeDetailVisual(root) {
   root.removeAttribute('aria-label');
   root.replaceChildren(image);
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  const categoryList = document.querySelector('#category-list');
-  const categoryHeadingVisual = document.querySelector('#category-heading-visual');
-  const challengeList = document.querySelector('#challenge-list');
-  const challengeDetailVisuals = [
-    document.querySelector('#questionnaire-visual'),
-    document.querySelector('#challenge-detail-visual'),
-  ].filter(Boolean);
-
-  if (categoryList) {
-    replaceCategoryVisuals(categoryList);
-
-    const categoryObserver = new MutationObserver(() => replaceCategoryVisuals(categoryList));
-    categoryObserver.observe(categoryList, { childList: true, subtree: true });
-  }
-
-  if (categoryHeadingVisual) {
-    replaceCategoryHeadingVisual(categoryHeadingVisual);
-
-    const categoryHeadingObserver = new MutationObserver(() => replaceCategoryHeadingVisual(categoryHeadingVisual));
-    categoryHeadingObserver.observe(categoryHeadingVisual, { attributes: true, attributeFilter: ['class'] });
-  }
-
-  if (challengeList) {
-    replaceChallengeVisuals(challengeList);
-
-    const challengeObserver = new MutationObserver(() => replaceChallengeVisuals(challengeList));
-    challengeObserver.observe(challengeList, { childList: true, subtree: true });
-  }
-
-  challengeDetailVisuals.forEach((detailVisual) => {
-    replaceChallengeDetailVisual(detailVisual);
-
-    const detailObserver = new MutationObserver(() => replaceChallengeDetailVisual(detailVisual));
-    detailObserver.observe(detailVisual, { attributes: true, attributeFilter: ['class'] });
-  });
-});
