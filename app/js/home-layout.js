@@ -1,9 +1,11 @@
 function buildHomepage() {
   const intro = document.querySelector('#screen-intro');
+  const category = document.querySelector('#screen-category');
   const categoryList = document.querySelector('#category-list');
   if (!intro || !categoryList) return;
 
   intro.classList.add('container-xl', 'px-0');
+  category?.classList.add('container-xl', 'px-0');
 
   const hero = intro.querySelector('.app-hero-card');
   if (hero) {
@@ -39,7 +41,8 @@ function buildHomepage() {
 
 function setupHomepageShell() {
   const intro = document.querySelector('#screen-intro');
-  if (!intro) return;
+  const category = document.querySelector('#screen-category');
+  if (!intro || !category) return;
 
   const sidebar = document.querySelector('.app-sidebar');
   const topbarBrand = document.querySelector('.app-topbar .navbar-brand');
@@ -50,19 +53,22 @@ function setupHomepageShell() {
 
   const applyLayout = () => {
     const isIntro = !intro.classList.contains('d-none');
+    const isCategory = !category.classList.contains('d-none');
+    const isSelectionScreen = isIntro || isCategory;
 
-    sidebar?.classList.toggle('d-lg-flex', !isIntro);
-    topbarBrand?.classList.toggle('d-lg-none', !isIntro);
-    desktopProgress?.classList.toggle('d-md-flex', !isIntro);
-    mobileProgressShell?.classList.toggle('d-none', isIntro);
-    mainColumn?.classList.toggle('col-xxl-8', !isIntro);
-    contextColumn?.classList.toggle('d-none', isIntro);
+    sidebar?.classList.toggle('d-lg-flex', !isSelectionScreen);
+    topbarBrand?.classList.toggle('d-lg-none', !isSelectionScreen);
+    desktopProgress?.classList.toggle('d-md-flex', !isSelectionScreen);
+    mobileProgressShell?.classList.toggle('d-none', isSelectionScreen);
+    mainColumn?.classList.toggle('col-xxl-8', !isSelectionScreen);
+    contextColumn?.classList.toggle('d-none', isSelectionScreen);
   };
 
   applyLayout();
 
   const observer = new MutationObserver(applyLayout);
   observer.observe(intro, { attributes: true, attributeFilter: ['class'] });
+  observer.observe(category, { attributes: true, attributeFilter: ['class'] });
 }
 
 function initHomepageLayout() {
