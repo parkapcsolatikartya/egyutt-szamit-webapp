@@ -97,10 +97,35 @@ function replaceChallengeVisuals(root) {
   });
 }
 
+function replaceChallengeDetailVisual(root) {
+  const visualClass = [...root.classList].find((className) => className.startsWith('challenge-detail-visual-'));
+  const visualKey = visualClass?.replace('challenge-detail-visual-', '');
+  const asset = CHALLENGE_IMAGES[visualKey];
+  if (!asset) return;
+
+  const image = document.createElement('img');
+  image.src = asset.src;
+  image.alt = root.getAttribute('aria-label') ?? '';
+  image.width = asset.width;
+  image.height = asset.height;
+  image.loading = 'eager';
+  image.decoding = 'async';
+  image.className = 'img-fluid d-block rounded-4';
+
+  root.className = 'd-flex align-items-center justify-content-center p-4 p-md-5 border-bottom bg-white';
+  root.removeAttribute('role');
+  root.removeAttribute('aria-label');
+  root.replaceChildren(image);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const categoryList = document.querySelector('#category-list');
   const categoryHeadingVisual = document.querySelector('#category-heading-visual');
   const challengeList = document.querySelector('#challenge-list');
+  const challengeDetailVisuals = [
+    document.querySelector('#questionnaire-visual'),
+    document.querySelector('#challenge-detail-visual'),
+  ].filter(Boolean);
 
   if (categoryList) {
     replaceCategoryVisuals(categoryList);
@@ -113,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     replaceCategoryHeadingVisual(categoryHeadingVisual);
 
     const categoryHeadingObserver = new MutationObserver(() => replaceCategoryHeadingVisual(categoryHeadingVisual));
-    categoryHeadingObserver.observe(categoryHeadingVisual, { attributes: true });
+    categoryHeadingObserver.observe(categoryHeadingVisual, { attributes: true, attributeFilter: ['class'] });
   }
 
   if (challengeList) {
@@ -122,4 +147,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const challengeObserver = new MutationObserver(() => replaceChallengeVisuals(challengeList));
     challengeObserver.observe(challengeList, { childList: true, subtree: true });
   }
+
+  challengeDetailVisuals.forEach((detailVisual) => {
+    replaceChallengeDetailVisual(detailVisual);
+
+    const detailObserver = new MutationObserver(() => replaceChallengeDetailVisual(detailVisual));
+    detailObserver.observe(detailVisual, { attributes: true, attributeFilter: ['class'] });
+  });
 });
