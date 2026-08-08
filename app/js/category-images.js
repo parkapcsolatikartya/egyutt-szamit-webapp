@@ -56,6 +56,27 @@ function replaceCategoryVisuals(root) {
   });
 }
 
+function replaceCategoryHeadingVisual(root) {
+  const visualClass = [...root.classList].find((className) => className.startsWith('category-heading-visual-'));
+  const visualKey = visualClass?.replace('category-heading-visual-', '');
+  const src = CATEGORY_IMAGES[visualKey];
+  if (!src) return;
+
+  const image = document.createElement('img');
+  image.src = src;
+  image.alt = root.getAttribute('aria-label') ?? '';
+  image.width = 144;
+  image.height = 144;
+  image.loading = 'eager';
+  image.decoding = 'async';
+  image.className = 'img-fluid d-block rounded-4';
+
+  root.className = 'd-flex align-items-center justify-content-center flex-shrink-0 p-2 p-md-3';
+  root.removeAttribute('role');
+  root.removeAttribute('aria-label');
+  root.replaceChildren(image);
+}
+
 function replaceChallengeVisuals(root) {
   root.querySelectorAll('.challenge-visual').forEach((placeholder) => {
     const visualClass = [...placeholder.classList].find((className) => className.startsWith('challenge-visual-'));
@@ -78,6 +99,7 @@ function replaceChallengeVisuals(root) {
 
 document.addEventListener('DOMContentLoaded', () => {
   const categoryList = document.querySelector('#category-list');
+  const categoryHeadingVisual = document.querySelector('#category-heading-visual');
   const challengeList = document.querySelector('#challenge-list');
 
   if (categoryList) {
@@ -85,6 +107,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const categoryObserver = new MutationObserver(() => replaceCategoryVisuals(categoryList));
     categoryObserver.observe(categoryList, { childList: true, subtree: true });
+  }
+
+  if (categoryHeadingVisual) {
+    replaceCategoryHeadingVisual(categoryHeadingVisual);
+
+    const categoryHeadingObserver = new MutationObserver(() => replaceCategoryHeadingVisual(categoryHeadingVisual));
+    categoryHeadingObserver.observe(categoryHeadingVisual, { attributes: true });
   }
 
   if (challengeList) {
