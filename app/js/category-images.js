@@ -6,6 +6,24 @@ const CATEGORY_IMAGES = {
   gas: './assets/images/ikon-foldgaz.webp',
 };
 
+const CHALLENGE_IMAGES = {
+  'shorter-shower': {
+    src: './assets/images/viz-zuhanyzas.webp',
+    width: 280,
+    height: 187,
+  },
+  dishwashing: {
+    src: './assets/images/viz-mosogatas.webp',
+    width: 280,
+    height: 210,
+  },
+  'full-washer': {
+    src: './assets/images/viz-mosas.webp',
+    width: 280,
+    height: 187,
+  },
+};
+
 function replaceCategoryVisuals(root) {
   root.querySelectorAll('.category-visual').forEach((placeholder) => {
     const visualClass = [...placeholder.classList].find((className) => className.startsWith('category-visual-'));
@@ -26,12 +44,41 @@ function replaceCategoryVisuals(root) {
   });
 }
 
+function replaceChallengeVisuals(root) {
+  root.querySelectorAll('.challenge-visual').forEach((placeholder) => {
+    const visualClass = [...placeholder.classList].find((className) => className.startsWith('challenge-visual-'));
+    const visualKey = visualClass?.replace('challenge-visual-', '');
+    const asset = CHALLENGE_IMAGES[visualKey];
+    if (!asset) return;
+
+    const image = document.createElement('img');
+    image.src = asset.src;
+    image.alt = placeholder.getAttribute('aria-label') ?? '';
+    image.width = asset.width;
+    image.height = asset.height;
+    image.loading = 'lazy';
+    image.decoding = 'async';
+    image.className = 'img-fluid w-100 d-block';
+
+    placeholder.replaceWith(image);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const categoryList = document.querySelector('#category-list');
-  if (!categoryList) return;
+  const challengeList = document.querySelector('#challenge-list');
 
-  replaceCategoryVisuals(categoryList);
+  if (categoryList) {
+    replaceCategoryVisuals(categoryList);
 
-  const observer = new MutationObserver(() => replaceCategoryVisuals(categoryList));
-  observer.observe(categoryList, { childList: true, subtree: true });
+    const categoryObserver = new MutationObserver(() => replaceCategoryVisuals(categoryList));
+    categoryObserver.observe(categoryList, { childList: true, subtree: true });
+  }
+
+  if (challengeList) {
+    replaceChallengeVisuals(challengeList);
+
+    const challengeObserver = new MutationObserver(() => replaceChallengeVisuals(challengeList));
+    challengeObserver.observe(challengeList, { childList: true, subtree: true });
+  }
 });
