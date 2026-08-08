@@ -26,11 +26,13 @@ const CHALLENGE_IMAGES = {
     src: './assets/images/aram-vilagitas.webp',
     width: 280,
     height: 210,
+    imageClasses: 'img-fluid w-100 d-block p-3 p-md-4',
   },
   'gentle-cooling': {
-    src: './assets/images/aram-legkondi.webp',
-    width: 280,
-    height: 187,
+    src: './assets/images/aram-legkondi-v2.webp',
+    width: 360,
+    height: 240,
+    imageClasses: 'img-fluid w-100 d-block p-3 p-md-4',
   },
 };
 
@@ -68,7 +70,7 @@ function replaceChallengeVisuals(root) {
     image.height = asset.height;
     image.loading = 'lazy';
     image.decoding = 'async';
-    image.className = 'img-fluid w-100 d-block';
+    image.className = asset.imageClasses ?? 'img-fluid w-100 d-block';
 
     placeholder.replaceWith(image);
   });
