@@ -4,6 +4,12 @@ import {
   formatRangeHu,
   roundRange,
 } from './calculator.js';
+import {
+  getCategoryImage,
+  getChallengeImage,
+  renderCategoryHeadingImage,
+  renderChallengeDetailImage,
+} from './category-images.js';
 
 const STORAGE_KEY = 'egyutt-szamit-v0-state';
 const SCREEN_IDS = ['intro', 'category', 'questionnaire', 'challenge', 'active', 'checkin', 'result', 'invite', 'next-step'];
@@ -106,12 +112,13 @@ function renderCategories() {
   elements.categoryList.replaceChildren();
 
   categories.forEach((category) => {
+    const image = getCategoryImage(category.visualKey);
     const column = document.createElement('div');
     column.className = 'col-12 col-md-6 col-xl-4';
     column.innerHTML = `
       <article class="card category-card category-card-${category.visualKey} border-0 h-100 overflow-hidden" data-status="${category.status}">
         <div class="category-media p-3">
-          <div class="category-visual category-visual-${category.visualKey}" role="img" aria-label="${escapeHtml(category.imageAlt)}"></div>
+          <img src="${image.src}" alt="${escapeHtml(category.imageAlt)}" width="${image.width}" height="${image.height}" loading="lazy" decoding="async" class="img-fluid mx-auto d-block rounded-4">
         </div>
         <div class="card-body p-4 d-flex flex-column">
           <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
@@ -139,8 +146,7 @@ function selectCategory(categoryId, { replaceHistory = false } = {}) {
 }
 
 function renderCategoryScreen(category) {
-  elements.categoryHeadingVisual.className = `category-heading-visual category-heading-visual-${category.visualKey} flex-shrink-0`;
-  elements.categoryHeadingVisual.setAttribute('aria-label', category.imageAlt);
+  renderCategoryHeadingImage(elements.categoryHeadingVisual, category);
   elements.categoryKicker.textContent = `${category.title} kategória`;
   elements.categoryTitle.textContent = category.id === 'water' ? 'Melyik vízpróbával kezdenél?' : 'Melyik árampróbával kezdenél?';
   elements.categoryIntro.textContent = category.id === 'water'
@@ -151,11 +157,12 @@ function renderCategoryScreen(category) {
   challenges
     .filter((challenge) => challenge.categoryId === category.id && challenge.status === 'active')
     .forEach((challenge) => {
+      const image = getChallengeImage(challenge.visualKey);
       const column = document.createElement('div');
       column.className = 'col-12 col-md-6';
       column.innerHTML = `
         <article class="card challenge-card border-0 h-100 overflow-hidden">
-          <div class="challenge-visual challenge-visual-${challenge.visualKey}" role="img" aria-label="${escapeHtml(challenge.imageAlt)}"></div>
+          <img src="${image.src}" alt="${escapeHtml(challenge.imageAlt)}" width="${image.width}" height="${image.height}" loading="lazy" decoding="async" class="${image.imageClasses ?? 'img-fluid w-100 d-block'}">
           <div class="card-body p-4">
             <h2 class="h5 mb-3">${escapeHtml(challenge.title)}</h2>
             <p class="text-body-secondary mb-4">${escapeHtml(challenge.cardDescription)}</p>
@@ -689,8 +696,7 @@ function showScreen(screenId, { focusHeading = false } = {}) {
 }
 
 function setChallengeVisual(element, challenge) {
-  element.className = `challenge-detail-visual challenge-detail-visual-${challenge.visualKey}`;
-  element.setAttribute('aria-label', challenge.imageAlt);
+  renderChallengeDetailImage(element, challenge);
 }
 
 function getSelectedCategory() {
