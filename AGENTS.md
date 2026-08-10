@@ -62,6 +62,41 @@ Ha a felhasználó külön azt írja, hogy `SYNC`, akkor a Codex:
 
 A `main` ágba közvetlen push nem megengedett.
 
+### `DEVICE_SETUP` parancs — egyszeri gépbeállítás
+
+Ha a felhasználó egy már megnyitott helyi repositoryban azt írja a Codexnek, hogy `DEVICE_SETUP`, akkor a Codex önállóan készítse elő az adott Macet a projekt fejlesztésére, és csak olyan ponton kérjen felhasználói beavatkozást, ahol operációs rendszer-, böngészős vagy fiókhitelesítés ténylegesen szükséges.
+
+A Codex:
+
+1. ellenőrizze, hogy a repository az `parkapcsolatikartya/egyutt-szamit-webapp` tároló helyi klónja;
+2. ellenőrizze a Git, Node.js, npm és GitHub CLI (`gh`) elérhetőségét;
+3. Node.js esetén legalább a `package.json` `engines` követelményét teljesítő verzió szükséges;
+4. hiányzó fejlesztői eszközt macOS-en lehetőleg Homebrew segítségével telepítsen; rendszerjelszó, Homebrew első telepítés vagy más rendszer-szintű engedély esetén kérje a felhasználó jóváhagyását, és ne kerülje meg az operációs rendszer védelmét;
+5. ellenőrizze a `gh auth status` eredményét; ha nincs érvényes GitHub-hitelesítés, indítsa el a GitHub CLI böngészős hitelesítését, és csak a böngészőben szükséges felhasználói jóváhagyásra várjon;
+6. sikeres GitHub-hitelesítés után futtassa a `gh auth setup-git` beállítást;
+7. váltson a `v0-prototype` ágra, ellenőrizze a munkafát, majd biztonságos állapotban húzza le a legfrissebb `origin/v0-prototype` állapotot;
+8. ellenőrizze a projekt futtatási környezetét, szükség esetén telepítse a projekt függőségeit;
+9. futtassa az `npm test` tesztcsomagot;
+10. indítsa el vagy készítse elő a helyi előnézetet `http://localhost:8080` címen;
+11. a végén röviden jelentse: eszközök verziói, GitHub-auth státusz, ág, teszteredmény, localhost státusz és minden olyan pont, amely még kézi beavatkozást igényel.
+
+A `DEVICE_SETUP` alatt forráskódot, projekt-tartalmat, CURRENT_TASK-ot vagy PROJECT_STATE-et módosítani tilos. Commit és push nem készülhet. A cél kizárólag az adott gép fejlesztői környezetének beállítása.
+
+### `WORKSTART` parancs — napi munkakezdés
+
+Ha a felhasználó azt írja a Codexnek, hogy `WORKSTART`, akkor a Codex a napi technikai indítást végezze el helyette:
+
+1. ellenőrizze, hogy a repositoryban van és az ág `v0-prototype`;
+2. futtassa a `git status` ellenőrzést;
+3. ha a munkafa nem tiszta, ne pulloljon és ne írjon felül semmit; röviden jelentse, mi maradt helyben;
+4. tiszta munkafánál húzza le a legfrissebb `origin/v0-prototype` állapotot;
+5. ellenőrizze, hogy a szükséges Node/npm környezet elérhető;
+6. indítsa el a helyi szervert, ha a 8080-as porton még nem fut a projekt;
+7. ellenőrizze, hogy `http://localhost:8080` válaszol;
+8. röviden jelentse, hogy a gép készen áll-e a munkára, és van-e aktív `.ai/CURRENT_TASK.md` feladat.
+
+A `WORKSTART` nem implementációs parancs: nem módosíthat forráskódot, nem commitolhat és nem pusholhat. Ha van aktív jóváhagyott feladat, annak végrehajtása továbbra is külön `START` paranccsal indul.
+
 ## 3. Bootstrap-first megjelenési szabály
 
 A webalkalmazás felületét kötelezően Bootstrap-alapokon kell felépíteni.
