@@ -10,9 +10,29 @@ Ez a dokumentum az asztali gép ↔ laptop, ChatGPT ↔ Codex és localhost ↔ 
 - **localhost:** azonnali vizuális ellenőrzés.
 - **Google Drive:** kanonikus szakmai, módszertani és vizuális projektforrások.
 
-## Munkakezdés bármelyik gépen
+## Új gép egyszeri beállítása
 
-A repository helyi példányában:
+Ha a repository már meg van nyitva VS Code-ban, a Codex chatben elég ezt írni:
+
+```text
+DEVICE_SETUP
+```
+
+A Codex az `AGENTS.md` protokollja alapján ellenőrzi és lehetőség szerint beállítja a Git, Node.js, npm és GitHub CLI környezetet, a GitHub-hitelesítést, a `v0-prototype` ágat, a teszteket és a localhost előnézetet. Csak a valóban elkerülhetetlen rendszer- vagy böngészős hitelesítési pontokon kér felhasználói beavatkozást.
+
+Ha a repository még nincs a gépen, először egyszer kell helyileg klónozni és VS Code-ban megnyitni; ezután a `DEVICE_SETUP` végzi a további környezet-ellenőrzést.
+
+## Napi munkakezdés bármelyik gépen
+
+A kézi terminálparancsok helyett a Codex chatben elsőként használható:
+
+```text
+WORKSTART
+```
+
+Ez ellenőrzi a `v0-prototype` ágat és a munkafát, tiszta állapotban lehúzza a legfrissebb GitHub-verziót, ellenőrzi a helyi környezetet, és elindítja vagy ellenőrzi a localhostot.
+
+Kézi tartalék eljárás:
 
 ```bash
 git switch v0-prototype
@@ -26,7 +46,7 @@ Előnézet:
 http://localhost:8080
 ```
 
-A Codexben a jóváhagyott feladat indítása:
+A Codexben a jóváhagyott implementációs feladat indítása:
 
 ```text
 START
@@ -41,7 +61,7 @@ Munka közben nincs szükség GitHub pushra minden módosítás után.
 ```text
 ChatGPT-ben döntés
 → CURRENT_TASK
-→ helyi pull
+→ Codex WORKSTART
 → Codex START
 → fájlmódosítás
 → localhost ellenőrzés
@@ -60,7 +80,13 @@ SYNC
 
 A `SYNC` tesztel, commitol és pusholja a `v0-prototype` ágat az `AGENTS.md` szabályai szerint.
 
-A másik gépen:
+A másik gépen elég a Codex chatben:
+
+```text
+WORKSTART
+```
+
+Kézi tartalék:
 
 ```bash
 git switch v0-prototype
@@ -76,6 +102,7 @@ Ezután ugyanaz a kód, CURRENT_TASK, TASK_RESULT, PROJECT_STATE és szabályren
 - Nem kell ZIP-pel vagy Drive-on keresztül mozgatni a forráskódot a két gép között.
 - A Codex nem bővítheti önállóan a CURRENT_TASK scope-ját.
 - A `main` ágra nem kerül közvetlen fejlesztői push.
+- A `WORKSTART` és `DEVICE_SETUP` nem módosíthat projekt-forráskódot.
 
 ## Feladat lezárása
 
