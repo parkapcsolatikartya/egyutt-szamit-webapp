@@ -1,6 +1,6 @@
 # TASK RESULT
 
-Status: SYNC_BLOCKED — GITHUB_AUTHENTICATION_FAILED
+Status: SYNCED
 Task ID: HANDOFF-TEST-002
 Date: 2026-08-10
 
@@ -31,4 +31,4 @@ Nem történt megbízható, tényleges böngésző-DOM- vagy képernyős ellenő
 
 Első helyi commit: `e09eeec` — `Update homepage hero punctuation`.
 
-A `git push origin v0-prototype` kísérlet sikertelen: a GitHub hitelesítés elutasította a tárolt azonosítót (`Invalid username or token`). A jelszavas Git-művelet nem támogatott. A commit helyben megvan, de még nincs feltöltve.
+A korábbi push-kísérlet hitelesítési hibája után a `git push origin v0-prototype` sikeresen lefutott. A `e09eeec` és `6cfb2f7` commitok felkerültek az `origin/v0-prototype` ágra.
