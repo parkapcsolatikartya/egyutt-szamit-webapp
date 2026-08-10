@@ -30,22 +30,34 @@ A projekt rövid, gépek között hordozható állapotképe:
 
 `/PROJECT_STATE.md`
 
+### Helyi fejlesztői PATH — minden Codex munkaparancs előtt
+
+A VS Code/Codex folyamat nem minden macOS-indítási módban örökli a felhasználó `~/.zshrc` PATH-beállításait. Ezért a `WORKSTART`, `START`, `SYNC` és `DEVICE_SETUP` végrehajtásának első technikai lépéseként a Codex ugyanabban a shellben futtassa:
+
+```bash
+export PATH="$HOME/.local/node-current/bin:$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+hash -r 2>/dev/null || true
+```
+
+Ezután ellenőrizze a szükséges eszközöket (`node`, `npm`, `gh`, `git`). A nem létező könyvtárak PATH-ba vétele ártalmatlan; ezzel ugyanaz a protokoll működik a user-local binárisokat használó régebbi Intel Macen és a Homebrew-es újabb Macen is.
+
 ### `START` parancs
 
 Ha a felhasználó a Codexnek azt írja, hogy `START`, akkor a Codex:
 
-1. ellenőrizze, hogy a jelenlegi ág `v0-prototype`;
-2. olvassa el ezt az `AGENTS.md` fájlt;
-3. olvassa el a `PROJECT_STATE.md` fájlt;
-4. olvassa el a `docs/guidelines/PROJECT_RULES.md` és `docs/guidelines/VISUAL_RULES.md` fájlokat;
-5. képi/isometric feladatnál olvassa el a `docs/guidelines/ISOMETRIC_RULES.md` fájlt is;
-6. olvassa el a `.ai/CURRENT_TASK.md` fájlt;
-7. kizárólag a CURRENT_TASK hatókörében dolgozzon;
-8. felhasználói felületet érintő módosítás előtt azonosítsa a tényleges renderelési forrást: ne feltételezze, hogy a statikus `index.html` marad a böngészőben látható DOM; keressen olyan JavaScriptet vagy sablont, amely betöltéskor átírhatja az érintett elemet;
-9. a változtatást helyben hajtsa végre, és a szükséges ellenőrzéseket futtassa le;
-10. vizuális feladatnál ne tekintse elégségesnek pusztán a kiszolgált HTML forrásának (`curl`, grep) ellenőrzését, ha JavaScript módosíthatja a DOM-ot; a ténylegesen renderelt felületet is ellenőrizze, és jelezze, ha erre a környezetből nincs megbízható lehetősége;
-11. a munka végén írja felül a `.ai/TASK_RESULT.md` fájlt a tényleges eredménnyel;
-12. ne commitoljon és ne pusholjon, hacsak a felhasználó erre külön nem utasítja.
+1. alkalmazza a fenti helyi fejlesztői PATH-beállítást;
+2. ellenőrizze, hogy a jelenlegi ág `v0-prototype`;
+3. olvassa el ezt az `AGENTS.md` fájlt;
+4. olvassa el a `PROJECT_STATE.md` fájlt;
+5. olvassa el a `docs/guidelines/PROJECT_RULES.md` és `docs/guidelines/VISUAL_RULES.md` fájlokat;
+6. képi/isometric feladatnál olvassa el a `docs/guidelines/ISOMETRIC_RULES.md` fájlt is;
+7. olvassa el a `.ai/CURRENT_TASK.md` fájlt;
+8. kizárólag a CURRENT_TASK hatókörében dolgozzon;
+9. felhasználói felületet érintő módosítás előtt azonosítsa a tényleges renderelési forrást: ne feltételezze, hogy a statikus `index.html` marad a böngészőben látható DOM; keressen olyan JavaScriptet vagy sablont, amely betöltéskor átírhatja az érintett elemet;
+10. a változtatást helyben hajtsa végre, és a szükséges ellenőrzéseket futtassa le;
+11. vizuális feladatnál ne tekintse elégségesnek pusztán a kiszolgált HTML forrásának (`curl`, grep) ellenőrzését, ha JavaScript módosíthatja a DOM-ot; a ténylegesen renderelt felületet is ellenőrizze, és jelezze, ha erre a környezetből nincs megbízható lehetősége;
+12. a munka végén írja felül a `.ai/TASK_RESULT.md` fájlt a tényleges eredménnyel;
+13. ne commitoljon és ne pusholjon, hacsak a felhasználó erre külön nem utasítja.
 
 Ha a feladat, a fájl vagy valamely kötelező szabály nem érthető, a Codex ne találjon ki új scope-ot. A hiányt a `TASK_RESULT.md` fájlban jelezze, illetve kérdezzen vissza csak akkor, ha a biztonságos implementáció másként nem lehetséges.
 
@@ -53,12 +65,13 @@ Ha a feladat, a fájl vagy valamely kötelező szabály nem érthető, a Codex n
 
 Ha a felhasználó külön azt írja, hogy `SYNC`, akkor a Codex:
 
-1. ellenőrizze a `git status` eredményét;
-2. futtassa a feladathoz tartozó teszteket;
-3. csak a jelenlegi munkamenethez tartozó módosításokat stage-elje;
-4. készítsen rövid, értelmes commitot;
-5. pusholja a `v0-prototype` ágat;
-6. a `.ai/TASK_RESULT.md` fájlban rögzítse a commit azonosítóját, ha elérhető.
+1. alkalmazza a fenti helyi fejlesztői PATH-beállítást;
+2. ellenőrizze a `git status` eredményét;
+3. futtassa a feladathoz tartozó teszteket;
+4. csak a jelenlegi munkamenethez tartozó módosításokat stage-elje;
+5. készítsen rövid, értelmes commitot;
+6. pusholja a `v0-prototype` ágat;
+7. a `.ai/TASK_RESULT.md` fájlban rögzítse a commit azonosítóját, ha elérhető.
 
 A `main` ágba közvetlen push nem megengedett.
 
@@ -68,17 +81,19 @@ Ha a felhasználó egy már megnyitott helyi repositoryban azt írja a Codexnek,
 
 A Codex:
 
-1. ellenőrizze, hogy a repository az `parkapcsolatikartya/egyutt-szamit-webapp` tároló helyi klónja;
-2. ellenőrizze a Git, Node.js, npm és GitHub CLI (`gh`) elérhetőségét;
-3. Node.js esetén legalább a `package.json` `engines` követelményét teljesítő verzió szükséges;
-4. hiányzó fejlesztői eszközt macOS-en lehetőleg Homebrew segítségével telepítsen; rendszerjelszó, Homebrew első telepítés vagy más rendszer-szintű engedély esetén kérje a felhasználó jóváhagyását, és ne kerülje meg az operációs rendszer védelmét;
-5. ellenőrizze a `gh auth status` eredményét; ha nincs érvényes GitHub-hitelesítés, indítsa el a GitHub CLI böngészős hitelesítését, és csak a böngészőben szükséges felhasználói jóváhagyásra várjon;
-6. sikeres GitHub-hitelesítés után futtassa a `gh auth setup-git` beállítást;
-7. váltson a `v0-prototype` ágra, ellenőrizze a munkafát, majd biztonságos állapotban húzza le a legfrissebb `origin/v0-prototype` állapotot;
-8. ellenőrizze a projekt futtatási környezetét, szükség esetén telepítse a projekt függőségeit;
-9. futtassa az `npm test` tesztcsomagot;
-10. indítsa el vagy készítse elő a helyi előnézetet `http://localhost:8080` címen;
-11. a végén röviden jelentse: eszközök verziói, GitHub-auth státusz, ág, teszteredmény, localhost státusz és minden olyan pont, amely még kézi beavatkozást igényel.
+1. alkalmazza a fenti helyi fejlesztői PATH-beállítást;
+2. ellenőrizze, hogy a repository az `parkapcsolatikartya/egyutt-szamit-webapp` tároló helyi klónja;
+3. ellenőrizze a Git, Node.js, npm és GitHub CLI (`gh`) elérhetőségét;
+4. Node.js esetén legalább a `package.json` `engines` követelményét teljesítő verzió szükséges;
+5. hiányzó fejlesztői eszköz esetén elsőként a repository `scripts/bootstrap-mac.sh` telepítőjének logikáját kövesse; régebbi macOS-en ne indítson indokolatlan Homebrew-forrásfordítást, ha hivatalos előre fordított bináris használható;
+6. rendszerjelszó, rendszer-szintű engedély vagy böngészős hitelesítés esetén kérje a felhasználó jóváhagyását, és ne kerülje meg az operációs rendszer védelmét;
+7. ellenőrizze a `gh auth status` eredményét; ha nincs érvényes GitHub-hitelesítés, indítsa el a GitHub CLI böngészős hitelesítését, és csak a böngészőben szükséges felhasználói jóváhagyásra várjon;
+8. sikeres GitHub-hitelesítés után futtassa a `gh auth setup-git` beállítást;
+9. váltson a `v0-prototype` ágra, ellenőrizze a munkafát, majd biztonságos állapotban húzza le a legfrissebb `origin/v0-prototype` állapotot;
+10. ellenőrizze a projekt futtatási környezetét, szükség esetén telepítse a projekt függőségeit;
+11. futtassa az `npm test` tesztcsomagot;
+12. indítsa el vagy készítse elő a helyi előnézetet `http://localhost:8080` címen;
+13. a végén röviden jelentse: eszközök verziói, GitHub-auth státusz, ág, teszteredmény, localhost státusz és minden olyan pont, amely még kézi beavatkozást igényel.
 
 A `DEVICE_SETUP` alatt forráskódot, projekt-tartalmat, CURRENT_TASK-ot vagy PROJECT_STATE-et módosítani tilos. Commit és push nem készülhet. A cél kizárólag az adott gép fejlesztői környezetének beállítása.
 
@@ -86,14 +101,16 @@ A `DEVICE_SETUP` alatt forráskódot, projekt-tartalmat, CURRENT_TASK-ot vagy PR
 
 Ha a felhasználó azt írja a Codexnek, hogy `WORKSTART`, akkor a Codex a napi technikai indítást végezze el helyette:
 
-1. ellenőrizze, hogy a repositoryban van és az ág `v0-prototype`;
-2. futtassa a `git status` ellenőrzést;
-3. ha a munkafa nem tiszta, ne pulloljon és ne írjon felül semmit; röviden jelentse, mi maradt helyben;
-4. tiszta munkafánál húzza le a legfrissebb `origin/v0-prototype` állapotot;
-5. ellenőrizze, hogy a szükséges Node/npm környezet elérhető;
-6. indítsa el a helyi szervert, ha a 8080-as porton még nem fut a projekt;
-7. ellenőrizze, hogy `http://localhost:8080` válaszol;
-8. röviden jelentse, hogy a gép készen áll-e a munkára, és van-e aktív `.ai/CURRENT_TASK.md` feladat.
+1. alkalmazza a fenti helyi fejlesztői PATH-beállítást;
+2. ellenőrizze, hogy a repositoryban van és az ág `v0-prototype`;
+3. futtassa a `git status` ellenőrzést;
+4. ha a munkafa nem tiszta, ne pulloljon és ne írjon felül semmit; röviden jelentse, mi maradt helyben;
+5. tiszta munkafánál húzza le a legfrissebb `origin/v0-prototype` állapotot;
+6. a pull után ismét olvassa be az aktuális `AGENTS.md` fájlt, és ha a munkafolyamat-szabály közben frissült, már az új szabály szerint folytassa;
+7. ellenőrizze `node --version`, `npm --version` és szükség esetén `gh auth status` segítségével a környezetet;
+8. indítsa el a helyi szervert, ha a 8080-as porton még nem fut a projekt;
+9. ellenőrizze, hogy `http://localhost:8080` válaszol;
+10. röviden jelentse, hogy a gép készen áll-e a munkára, és van-e aktív `.ai/CURRENT_TASK.md` feladat.
 
 A `WORKSTART` nem implementációs parancs: nem módosíthat forráskódot, nem commitolhat és nem pusholhat. Ha van aktív jóváhagyott feladat, annak végrehajtása továbbra is külön `START` paranccsal indul.
 
