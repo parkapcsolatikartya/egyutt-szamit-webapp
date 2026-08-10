@@ -1,51 +1,55 @@
 # CURRENT TASK
 
 Status: READY_FOR_CODEX
-Task ID: HANDOFF-TEST-001
+Task ID: HANDOFF-TEST-002
 Prepared by: ChatGPT
 Date: 2026-08-10
 
 ## Cél
 
-A ChatGPT → GitHub → Codex → localhost → TASK_RESULT → SYNC munkafolyamat első, szándékosan kicsi és könnyen visszaellenőrizhető próbája.
+A ChatGPT → GitHub → Codex → localhost → TASK_RESULT → SYNC munkafolyamat második, javított próbája. Ezúttal olyan szöveget módosítunk, amelyet a futó JavaScript ténylegesen renderel a böngészőben.
 
 ## Feladat
 
-Az `app/index.html` kezdőképernyő hero kártyájában lévő badge szövegét módosítsd.
+Az `app/js/home-layout.js` kezdőképernyő hero főcímében változtasd meg az írásjelet.
 
 Jelenlegi szöveg:
 
-`Első egynapos próba`
+`Egy kis változás is számít.`
 
 Új szöveg:
 
-`Egynapos próba`
+`Egy kis változás is számít!`
 
 ## Hatókör
 
-Csak az `app/index.html` fájl szükséges ehhez a módosításhoz.
+A felhasználói felület módosításához kizárólag az `app/js/home-layout.js` fájl szükséges.
 
-Ne változtass CSS-t, JavaScriptet, JSON-adatot, assetet vagy más felhasználói szöveget.
+A `.ai/TASK_RESULT.md` fájlt a START protokoll szerint természetesen frissítsd.
+
+Ne módosíts `app/index.html` fájlt, CSS-t, más JavaScriptet, JSON-adatot, assetet vagy más felhasználói szöveget.
 
 ## Kötelező munkamenet
 
 1. Kövesd az `AGENTS.md` `START` protokollját.
 2. Ellenőrizd, hogy a `v0-prototype` ágon dolgozol.
-3. Végezd el az egyetlen szövegmódosítást.
-4. Futtasd az `npm test` parancsot.
-5. Indítsd vagy használd a helyi előnézetet (`npm run serve`, `http://localhost:8080`).
-6. Ellenőrizd a kezdőképernyőn, hogy a badge új szövege látható.
-7. Írd felül a `.ai/TASK_RESULT.md` fájlt a tényleges eredménnyel.
-8. Ne commitolj és ne pusholj. Várd meg a felhasználó vizuális jóváhagyását és külön `SYNC` parancsát.
+3. Ellenőrizd, hogy a főoldal hero tartalmát ténylegesen a `home-layout.js` rendereli.
+4. Végezd el az egyetlen írásjel-módosítást.
+5. Futtasd az `npm test` parancsot.
+6. Használd a futó helyi előnézetet (`http://localhost:8080`).
+7. A ténylegesen renderelt kezdőképernyőn ellenőrizd, hogy a főcím végén felkiáltójel látható. Ha a környezetedből nem tudsz valódi böngésző-DOM ellenőrzést végezni, ezt egyértelműen írd le, és ne állíts vizuális ellenőrzést pusztán `curl` alapján.
+8. Írd felül a `.ai/TASK_RESULT.md` fájlt a tényleges eredménnyel.
+9. Ne commitolj és ne pusholj. Várd meg a felhasználó vizuális jóváhagyását és külön `SYNC` parancsát.
 
 ## Elfogadási kritériumok
 
-- A kezdőképernyő badge szövege pontosan `Egynapos próba`.
+- A böngészőben megjelenő főcím pontosan `Egy kis változás is számít!`.
 - Más látható szöveg nem változik.
+- `app/index.html` nem módosul.
 - Nem készül új CSS.
 - `npm test` sikeresen lefut.
-- A helyi oldal betöltődik `http://localhost:8080` alatt.
+- A helyi oldal működik `http://localhost:8080` alatt.
 
 ## Miért ezt teszteljük?
 
-Ez a változtatás technikailag minimális, ezért ha az átadás, branchelés, localhost vagy eredményjelentés hibás, azt a valódi fejlesztési feladatok kockáztatása nélkül észre tudjuk venni.
+Az első teszt megmutatta, hogy a statikus `index.html` hero tartalmát a `home-layout.js` betöltéskor felülírja. Ez a második próba azt ellenőrzi, hogy a handoff-rendszer már a tényleges renderelési forrást célozza, és a vizuális jóváhagyás valóban a futó felületre épül.
