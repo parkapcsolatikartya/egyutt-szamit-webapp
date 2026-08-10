@@ -5,6 +5,11 @@ REPO_URL="https://github.com/parkapcsolatikartya/egyutt-szamit-webapp.git"
 REPO_DIR="$HOME/Documents/Git/egyutt-szamit-webapp"
 BRANCH="v0-prototype"
 SERVER_LOG="/tmp/egyutt-szamit-webapp-8080.log"
+LOCAL_BIN="$HOME/.local/bin"
+NODE_ROOT="$HOME/.local/node"
+NODE_CURRENT="$HOME/.local/node-current"
+SHELL_RC="$HOME/.zshrc"
+PATH_LINE='export PATH="$HOME/.local/node-current/bin:$HOME/.local/bin:$PATH"'
 
 info() { printf '\n==> %s\n' "$1"; }
 warn() { printf '\n[!] %s\n' "$1"; }
@@ -14,66 +19,108 @@ if [[ "$(uname -s)" != "Darwin" ]]; then
   exit 1
 fi
 
+MACOS_VERSION="$(sw_vers -productVersion)"
+MACOS_MAJOR="${MACOS_VERSION%%.*}"
+MACHINE_ARCH="$(uname -m)"
+
+case "$MACHINE_ARCH" in
+  x86_64)
+    NODE_ARCH="x64"
+    GH_ARCH="amd64"
+    ;;
+  arm64)
+    NODE_ARCH="arm64"
+    GH_ARCH="arm64"
+    ;;
+  *)
+    echo "Nem támogatott Mac architektúra: $MACHINE_ARCH"
+    exit 1
+    ;;
+esac
+
 info "Együtt számít – Mac fejlesztői környezet előkészítése"
+printf 'macOS: %s\nArchitektúra: %s\n' "$MACOS_VERSION" "$MACHINE_ARCH"
 
 # Git / Apple Command Line Tools
-if ! command -v git >/dev/null 2>&1; then
-  warn "A Git/Apple Command Line Tools nincs telepítve."
+if ! command -v git >/dev/null 2>&1 || ! git --version >/dev/null 2>&1; then
+  warn "A Git/Apple Command Line Tools nincs használható állapotban."
   xcode-select --install >/dev/null 2>&1 || true
   echo "A macOS megnyitotta a Command Line Tools telepítőjét. Telepítsd, majd futtasd újra ugyanezt a bootstrap parancsot."
   exit 2
 fi
 
-# Homebrew
-if ! command -v brew >/dev/null 2>&1; then
-  warn "A Homebrew nincs telepítve. A Node.js és GitHub CLI automatikus telepítéséhez szükséges."
-  read -r -p "Telepítsem most a Homebrew-t a hivatalos telepítővel? [Y/n] " answer
-  answer=${answer:-Y}
-  if [[ "$answer" =~ ^[Yy]$ ]]; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    if [[ -x /opt/homebrew/bin/brew ]]; then
-      eval "$(/opt/homebrew/bin/brew shellenv)"
-    elif [[ -x /usr/local/bin/brew ]]; then
-      eval "$(/usr/local/bin/brew shellenv)"
-    fi
-  else
-    echo "Homebrew nélkül az automatikus beállítás itt megáll."
-    exit 3
-  fi
+# User-local PATH. This avoids Homebrew source builds on older macOS releases.
+mkdir -p "$LOCAL_BIN" "$NODE_ROOT"
+if [[ ! -f "$SHELL_RC" ]]; then
+  touch "$SHELL_RC"
 fi
-
-# Ensure brew is visible in this shell after installation.
-if [[ -x /opt/homebrew/bin/brew ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [[ -x /usr/local/bin/brew ]]; then
-  eval "$(/usr/local/bin/brew shellenv)"
+if ! grep -Fq "$PATH_LINE" "$SHELL_RC"; then
+  printf '\n# Együtt számít fejlesztői eszközök\n%s\n' "$PATH_LINE" >> "$SHELL_RC"
 fi
+export PATH="$NODE_CURRENT/bin:$LOCAL_BIN:$PATH"
 
-# Node.js >=20
+# Node.js >=20. Install the official prebuilt Node 24 binary directly from nodejs.org.
 need_node=0
 if ! command -v node >/dev/null 2>&1; then
   need_node=1
 else
-  node_major="$(node -p 'process.versions.node.split(".")[0]')"
+  node_major="$(node -p 'process.versions.node.split(".")[0]' 2>/dev/null || echo 0)"
   if (( node_major < 20 )); then
     need_node=1
   fi
 fi
+
 if (( need_node == 1 )); then
-  info "Node.js telepítése/frissítése Homebrew-val"
-  brew install node
+  info "Node.js 24 LTS hivatalos előre fordított bináris telepítése"
+  NODE_BASE="https://nodejs.org/dist/latest-v24.x"
+  NODE_FILE="$(curl -fsSL "$NODE_BASE/SHASUMS256.txt" | awk '{print $2}' | grep "^node-v24.*-darwin-${NODE_ARCH}\.tar\.gz$" | head -n 1)"
+  if [[ -z "$NODE_FILE" ]]; then
+    echo "Nem találtam megfelelő hivatalos Node.js macOS binárist az architektúrához: $NODE_ARCH"
+    exit 3
+  fi
+  NODE_DIR_NAME="${NODE_FILE%.tar.gz}"
+  TMP_NODE="$(mktemp -d /tmp/egyutt-node.XXXXXX)"
+  trap 'rm -rf "$TMP_NODE" 2>/dev/null || true' EXIT
+  curl -fL "$NODE_BASE/$NODE_FILE" -o "$TMP_NODE/$NODE_FILE"
+  tar -xzf "$TMP_NODE/$NODE_FILE" -C "$TMP_NODE"
+  rm -rf "$NODE_ROOT/$NODE_DIR_NAME"
+  mv "$TMP_NODE/$NODE_DIR_NAME" "$NODE_ROOT/$NODE_DIR_NAME"
+  ln -sfn "$NODE_ROOT/$NODE_DIR_NAME" "$NODE_CURRENT"
+  export PATH="$NODE_CURRENT/bin:$LOCAL_BIN:$PATH"
+  rm -rf "$TMP_NODE"
+  trap - EXIT
 fi
 
-# npm comes with Node.
 if ! command -v npm >/dev/null 2>&1; then
   echo "Az npm nem érhető el a Node telepítése után sem."
   exit 4
 fi
 
-# GitHub CLI
+# GitHub CLI. Use the official GitHub release binary instead of Homebrew.
 if ! command -v gh >/dev/null 2>&1; then
-  info "GitHub CLI telepítése"
-  brew install gh
+  info "GitHub CLI hivatalos macOS bináris telepítése"
+  GH_URL="$(curl -fsSL https://api.github.com/repos/cli/cli/releases/latest \
+    | grep '"browser_download_url":' \
+    | sed -E 's/.*"([^"]+)".*/\1/' \
+    | grep "_macOS_${GH_ARCH}\.zip$" \
+    | head -n 1)"
+  if [[ -z "$GH_URL" ]]; then
+    echo "Nem találtam megfelelő GitHub CLI macOS binárist az architektúrához: $GH_ARCH"
+    exit 5
+  fi
+  TMP_GH="$(mktemp -d /tmp/egyutt-gh.XXXXXX)"
+  trap 'rm -rf "$TMP_GH" 2>/dev/null || true' EXIT
+  curl -fL "$GH_URL" -o "$TMP_GH/gh.zip"
+  unzip -q "$TMP_GH/gh.zip" -d "$TMP_GH"
+  GH_BIN="$(find "$TMP_GH" -type f -path '*/bin/gh' -print | head -n 1)"
+  if [[ -z "$GH_BIN" ]]; then
+    echo "A GitHub CLI archívumban nem található a gh bináris."
+    exit 6
+  fi
+  cp "$GH_BIN" "$LOCAL_BIN/gh"
+  chmod +x "$LOCAL_BIN/gh"
+  rm -rf "$TMP_GH"
+  trap - EXIT
 fi
 
 # Local clone
@@ -81,7 +128,7 @@ mkdir -p "$HOME/Documents/Git"
 if [[ ! -d "$REPO_DIR/.git" ]]; then
   if [[ -e "$REPO_DIR" ]]; then
     echo "A célmappa létezik, de nem Git repository: $REPO_DIR"
-    exit 5
+    exit 7
   fi
   info "Repository klónozása"
   git clone "$REPO_URL" "$REPO_DIR"
@@ -92,13 +139,13 @@ cd "$REPO_DIR"
 remote_url="$(git remote get-url origin 2>/dev/null || true)"
 if [[ "$remote_url" != "$REPO_URL" && "$remote_url" != "https://github.com/parkapcsolatikartya/egyutt-szamit-webapp" ]]; then
   echo "A meglévő repository origin címe eltér a várt tárolótól: $remote_url"
-  exit 6
+  exit 8
 fi
 
 if [[ -n "$(git status --porcelain)" ]]; then
   warn "A repository munkafája nem tiszta. Nem pullolok és nem írok felül helyi módosítást."
   git status --short
-  exit 7
+  exit 9
 fi
 
 info "Fejlesztési ág frissítése"
@@ -135,7 +182,7 @@ else
   else
     warn "A localhost nem válaszol. Log: $SERVER_LOG"
     tail -n 30 "$SERVER_LOG" 2>/dev/null || true
-    exit 8
+    exit 10
   fi
 fi
 
