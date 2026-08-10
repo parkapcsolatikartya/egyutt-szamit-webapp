@@ -41,9 +41,11 @@ Ha a felhasználó a Codexnek azt írja, hogy `START`, akkor a Codex:
 5. képi/isometric feladatnál olvassa el a `docs/guidelines/ISOMETRIC_RULES.md` fájlt is;
 6. olvassa el a `.ai/CURRENT_TASK.md` fájlt;
 7. kizárólag a CURRENT_TASK hatókörében dolgozzon;
-8. a változtatást helyben hajtsa végre, és a szükséges ellenőrzéseket futtassa le;
-9. a munka végén írja felül a `.ai/TASK_RESULT.md` fájlt a tényleges eredménnyel;
-10. ne commitoljon és ne pusholjon, hacsak a felhasználó erre külön nem utasítja.
+8. felhasználói felületet érintő módosítás előtt azonosítsa a tényleges renderelési forrást: ne feltételezze, hogy a statikus `index.html` marad a böngészőben látható DOM; keressen olyan JavaScriptet vagy sablont, amely betöltéskor átírhatja az érintett elemet;
+9. a változtatást helyben hajtsa végre, és a szükséges ellenőrzéseket futtassa le;
+10. vizuális feladatnál ne tekintse elégségesnek pusztán a kiszolgált HTML forrásának (`curl`, grep) ellenőrzését, ha JavaScript módosíthatja a DOM-ot; a ténylegesen renderelt felületet is ellenőrizze, és jelezze, ha erre a környezetből nincs megbízható lehetősége;
+11. a munka végén írja felül a `.ai/TASK_RESULT.md` fájlt a tényleges eredménnyel;
+12. ne commitoljon és ne pusholjon, hacsak a felhasználó erre külön nem utasítja.
 
 Ha a feladat, a fájl vagy valamely kötelező szabály nem érthető, a Codex ne találjon ki új scope-ot. A hiányt a `TASK_RESULT.md` fájlban jelezze, illetve kérdezzen vissza csak akkor, ha a biztonságos implementáció másként nem lehetséges.
 
