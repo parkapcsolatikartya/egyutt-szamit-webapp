@@ -13,7 +13,7 @@ function buildHomepage() {
     hero.innerHTML = `
       <div class="py-2 py-lg-3">
         <p class="text-primary fw-semibold mb-2">Együtt számít</p>
-        <h1 class="display-4 fw-semibold mb-3" tabindex="-1">Egy kis változás is számít.</h1>
+        <h1 class="display-4 fw-semibold mb-3" tabindex="-1">Egy kis változás is számít!</h1>
         <p class="lead text-body-secondary mb-0 col-lg-9">Nem kell mindent egyszerre megváltoztatnod. Válassz egy hétköznapi területet, és nézd meg, milyen apró változtatást próbálhatnál ki.</p>
       </div>`;
   }
