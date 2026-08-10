@@ -315,11 +315,18 @@ function buildPersonalizedChallenge(challenge) {
   }
 
   if (challenge.id === 'dishwashing-flow') {
+    if (answers.dishwashing_change === 'machine-prerinse') {
+      return {
+        title: 'Mosogatógép folyó vizes előöblítés nélkül',
+        text: 'A következő mosogatógépes töltetnél távolítsd el a nagyobb ételmaradékot, de ne öblítsd végig az edényeket folyó víz alatt, ha a gép és az edények használati előírásai ezt lehetővé teszik.',
+        estimate: challenge.estimateText,
+        activeText: 'A mai cél: egy mosogatógépes töltetnél kihagyni a folyó víz alatti előöblítést, miközben a szükséges tisztaságot és a gép használati előírásait megtartod.',
+      };
+    }
+
     return {
-      title: challenge.detailTitle,
-      text: answers.dishwashing_mode === 'machine'
-        ? 'A következő kézi mosogatásnál figyeld meg, mikor zárható el a csap az áztatás, szivacsozás vagy az edények rendezése közben.'
-        : 'A következő kézi mosogatásnál próbáld csökkenteni azt az időt, amikor a víz úgy folyik, hogy éppen nem öblítesz vele.',
+      title: 'Kézi mosogatás kevesebb folyóvízzel',
+      text: 'A következő kézi mosogatásnál próbáld csökkenteni azt az időt, amikor a víz úgy folyik, hogy éppen nem öblítesz vele.',
       estimate: challenge.estimateText,
       activeText: 'A mai cél: egyetlen kézi mosogatásnál tudatosan csökkenteni a feleslegesen folyó víz idejét.',
     };
