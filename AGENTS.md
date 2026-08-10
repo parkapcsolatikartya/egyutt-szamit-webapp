@@ -4,34 +4,85 @@ Ez a fájl a repositoryban dolgozó minden fejlesztőre és automatizált kódü
 
 ## 1. Kötelező projektindítás
 
-Minden fejlesztési feladat előtt el kell olvasni a projekt Google Drive-mappájában található `00A – Kötelező munkakezdési iránytű` dokumentumot.
+A projekt szakmai és módszertani elsődleges forrása a Google Drive `Csepp a tengerben` projektmappája. A ChatGPT projektfeladat előtt köteles megnyitni a `00A – Kötelező munkakezdési iránytű` dokumentumot.
 
-Ha a dokumentum nem érhető el, ezt egyértelműen jelezni kell. Nem szabad úgy tenni, mintha el lett volna olvasva.
+A Codex helyi fejlesztéskor a repositoryban található, ellenőrzött fejlesztői összefoglalókat használja:
 
-## 2. Bootstrap-first megjelenési szabály
+- `docs/guidelines/PROJECT_RULES.md`
+- `docs/guidelines/VISUAL_RULES.md`
+- isometric vagy képi asset feladatnál: `docs/guidelines/ISOMETRIC_RULES.md`
+
+A Drive dokumentumai az elsődleges források; a repositorybeli fájlok Codex számára készített operatív összefoglalók. Ha a kettő között eltérés ismert, a Drive szabálya az irányadó, és a repository összefoglalóját frissíteni kell.
+
+## 2. ChatGPT → Codex handoff protokoll
+
+A fejlesztési döntések, UX-egyeztetés, kutatás és feladatspecifikáció elsődlegesen a webes ChatGPT projektben történik. Codexet elsősorban konkrét implementációra használjuk.
+
+A ChatGPT által jóváhagyott aktuális implementációs feladat helye:
+
+`/.ai/CURRENT_TASK.md`
+
+A Codex által készített végrehajtási összefoglaló helye:
+
+`/.ai/TASK_RESULT.md`
+
+A projekt rövid, gépek között hordozható állapotképe:
+
+`/PROJECT_STATE.md`
+
+### `START` parancs
+
+Ha a felhasználó a Codexnek azt írja, hogy `START`, akkor a Codex:
+
+1. ellenőrizze, hogy a jelenlegi ág `v0-prototype`;
+2. olvassa el ezt az `AGENTS.md` fájlt;
+3. olvassa el a `PROJECT_STATE.md` fájlt;
+4. olvassa el a `docs/guidelines/PROJECT_RULES.md` és `docs/guidelines/VISUAL_RULES.md` fájlokat;
+5. képi/isometric feladatnál olvassa el a `docs/guidelines/ISOMETRIC_RULES.md` fájlt is;
+6. olvassa el a `.ai/CURRENT_TASK.md` fájlt;
+7. kizárólag a CURRENT_TASK hatókörében dolgozzon;
+8. a változtatást helyben hajtsa végre, és a szükséges ellenőrzéseket futtassa le;
+9. a munka végén írja felül a `.ai/TASK_RESULT.md` fájlt a tényleges eredménnyel;
+10. ne commitoljon és ne pusholjon, hacsak a felhasználó erre külön nem utasítja.
+
+Ha a feladat, a fájl vagy valamely kötelező szabály nem érthető, a Codex ne találjon ki új scope-ot. A hiányt a `TASK_RESULT.md` fájlban jelezze, illetve kérdezzen vissza csak akkor, ha a biztonságos implementáció másként nem lehetséges.
+
+### `SYNC` parancs
+
+Ha a felhasználó külön azt írja, hogy `SYNC`, akkor a Codex:
+
+1. ellenőrizze a `git status` eredményét;
+2. futtassa a feladathoz tartozó teszteket;
+3. csak a jelenlegi munkamenethez tartozó módosításokat stage-elje;
+4. készítsen rövid, értelmes commitot;
+5. pusholja a `v0-prototype` ágat;
+6. a `.ai/TASK_RESULT.md` fájlban rögzítse a commit azonosítóját, ha elérhető.
+
+A `main` ágba közvetlen push nem megengedett.
+
+## 3. Bootstrap-first megjelenési szabály
 
 A webalkalmazás felületét kötelezően Bootstrap-alapokon kell felépíteni.
 
-Ez a szabály a teljes projektre vonatkozik: minden jelenlegi és későbbi oldalra, komponensre, prototípusra, staging és éles környezetre, valamint minden frontend forrásfájlra. Eltérés csak a projektgazda kifejezett jóváhagyásával és a Döntési naplóban rögzített indoklással engedélyezett.
-
-- A Bootstrap a projekt elsődleges mobile-first CSS frameworkje.
+- A Bootstrap 5 a projekt elsődleges mobile-first CSS frameworkje.
 - Elrendezéshez elsőként a Bootstrap gridet, containereket, flex- és spacing utilityket kell használni.
-- Tipográfiához, gombokhoz, űrlapokhoz, navigációhoz, kártyákhoz, visszajelzésekhez és reszponzív viselkedéshez elsőként a Bootstrap meglévő komponenseit és utility osztályait kell választani.
-- Új saját CSS-szabály csak akkor írható, ha a kívánt megjelenés Bootstrap osztályokkal nem oldható meg ésszerűen, vagy valóban egyedi vizuális elem szükséges.
+- Tipográfiához, gombokhoz, űrlapokhoz, navigációhoz, kártyákhoz, visszajelzésekhez és reszponzív viselkedéshez elsőként Bootstrap komponenseket és utility osztályokat kell választani.
+- Új saját CSS csak akkor írható, ha a kívánt megjelenés Bootstrap osztályokkal nem oldható meg ésszerűen, vagy valóban egyedi vizuális elem szükséges.
 - Tilos saját CSS-ben újraimplementálni olyan általános szabályt, amelyet a Bootstrap már biztosít.
 - A saját stílusokat az `app/assets/css/style.css` fájlban kell tartani.
-- Az inline `style` attribútum használata kerülendő. Kivétel csak dokumentált, technikailag indokolt eset lehet.
-- A saját CSS legyen rövid, célzott és komponensspecifikus. Globális felülírás csak indokolt esetben használható.
-- A Bootstrap osztályokat nem szabad indokolatlanul `!important` szabályokkal felülírni.
+- Inline `style` attribútum és indokolatlan `!important` kerülendő.
+- A döntési sorrend: Bootstrap komponens → Bootstrap utility → Bootstrap dokumentált testreszabás → célzott saját CSS.
 
-## 3. Mobile-first követelmény
+Eltérés csak a projektgazda kifejezett jóváhagyásával és a Döntési naplóban rögzített indoklással engedélyezett.
+
+## 4. Mobile-first és hozzáférhetőség
 
 - A legkisebb mobilos nézet az alapértelmezett.
 - Nagyobb képernyőkhöz Bootstrap breakpointokkal kell fokozatosan bővíteni a megjelenést.
-- A felületet legalább keskeny mobil, nagy mobil, tablet és asztali nézetben ellenőrizni kell.
-- Érintési célok, olvashatóság, űrlapkezelés és billentyűzetes használat nem romolhat a vizuális finomítás miatt.
+- A felületet legalább keskeny mobil, nagy mobil, tablet és asztali nézetben ellenőrizni kell, ha a változtatás vizuális vagy layoutot érint.
+- Érintési célok, olvashatóság, űrlapkezelés, szemantika és billentyűzetes használat nem romolhat vizuális finomítás miatt.
 
-## 4. Technikai alap
+## 5. Technikai alap
 
 - Szemantikus HTML.
 - Bootstrap 5.
@@ -41,67 +92,46 @@ Ez a szabály a teljes projektre vonatkozik: minden jelenlegi és későbbi olda
 - A helyi állapot LocalStorage-ban tárolható.
 - A V0 regisztráció és központi felhasználói adatbázis nélkül működik.
 
-## 5. Hitelességi szabályok
+## 6. Hitelességi szabályok
 
-- A felhasználó által megadott adatot, a mért adatot, a becslést, a feltételezést és a közösségi forgatókönyvet külön kell kezelni.
+- A felhasználó által megadott adatot, mért adatot, becslést, feltételezést és közösségi forgatókönyvet külön kell kezelni.
 - Ellenőrizetlen fogyasztási érték, tarifa, kibocsátási tényező vagy képlet nem kerülhet kész tényként a kódba.
 - Bizonytalan értéket tartományként kell kezelni; hamis pontosság tilos.
 - A felület nem kelthet bűntudatot, és nem javasolhat egészséget vagy alapvető higiéniát veszélyeztető változtatást.
 - Látványtervben szereplő szám, partnerlogó vagy együttműködés nem kerülhet a működő felületre külön tartalmi ellenőrzés nélkül.
 
-## 6. Fejlesztési munkafolyamat
+## 7. Kötelező vizuális irány
 
-- Fejlesztés külön ágon történjen, jelenleg: `v0-prototype`.
-- A `main` ágba csak ellenőrzött változtatás kerülhet pull requesten keresztül.
-- Minden módosításhoz világos commitüzenet tartozzon.
-- Új funkcióhoz vagy számítási modellhez megfelelő ellenőrzés vagy teszteset szükséges.
+A frontend elsődleges vizuális rendszere világos, levegős, barátságos és magas esztétikai minőségű. A funkcionálisan helyes, de vizuálisan kidolgozatlan komponens nem tekinthető késznek.
 
-## 7. Döntési sorrend felületi megoldásoknál
-
-Felületi probléma esetén ezt a sorrendet kell követni:
-
-1. Megoldható Bootstrap komponenssel?
-2. Megoldható Bootstrap utility osztályok kombinációjával?
-3. Megoldható Bootstrap CSS-változó vagy dokumentált testreszabás használatával?
-4. Csak ezután készülhet célzott saját szabály a `style.css` fájlban.
-
-Ha saját CSS készül, rövid megjegyzésben vagy a commit leírásában indokolni kell, miért nem volt elegendő a Bootstrap.
-
-## 8. Kötelező vizuális irány
-
-A további frontend-fejlesztés elsődleges vizuális rendszere világos, levegős és barátságos. A korábbi sötét admin-dashboard vagy „személyes hatásközpont” megjelenés történeti prototípus, nem aktuális irány.
-
-- Fehér vagy nagyon világos háttér használata.
+- Fehér vagy nagyon világos háttér.
 - Elsődleges akcentusok: kék, türkiz, mentazöld.
 - Meleg narancs vagy sárga csak kisebb kiemelésként.
-- Az illusztrációk stílusa: könnyű 3D vector, isometric vector vagy soft 3D UI illustration.
-- Egységes perspektíva, fényirány, árnyék, részletesség, karakterarány és színpaletta szükséges.
+- Illusztrációs stílus: lightweight 3D vector, isometric vector vagy soft 3D UI illustration.
+- Egységes perspektíva, fényirány, árnyék, részletesség, karakterarány és színpaletta.
 - Eltérő illusztrációs családok keverése kerülendő.
-- A 3D grafika csak szemléltető és márkaelem; nem helyettesíti a szemantikus HTML-t, a Bootstrap komponenst vagy a funkcionális feliratot.
+- A 3D grafika nem helyettesíti a szemantikus HTML-t, Bootstrap komponenst vagy funkcionális feliratot.
 - Funkcionális ikonhoz elsőként Bootstrap Icons használatos.
 
-A részletes irányt a Drive-források között található `09 – Vizuális rendszer és képi asset irányelvek` dokumentum rögzíti.
-
-## 9. Képi assetek és teljesítmény
+## 8. Képi assetek és teljesítmény
 
 - Egyszerű ikonhoz és egyszerű vector elemhez elsőként optimalizált SVG használatos.
-- Összetett 3D illusztrációnál a ténylegesen kisebb és megfelelő minőségű SVG, WebP vagy AVIF választandó; az SVG nem automatikusan a legkisebb.
+- Összetett 3D illusztrációnál a ténylegesen kisebb és megfelelő minőségű SVG, WebP vagy AVIF választandó.
 - PNG csak dokumentált technikai indokkal használható.
 - Nagy kép base64 formában nem ágyazható HTML-be vagy CSS-be.
-- Ugyanazt az ikont vagy illusztrációt ugyanazon fájlútvonalról és URL-ről kell újrahasználni.
-- Azonos asset több külön fájlnéven történő duplikálása tilos.
+- Ugyanazt az assetet ugyanazon fájlútvonalról és URL-ről kell újrahasználni; indokolatlan duplikáció tilos.
 - Hajtás alatti képen `loading="lazy"` használatos.
 - Minden képen legyen `width` és `height` attribútum.
 - Raster képnél szükség szerint `srcset`, `sizes` és `decoding="async"` használatos.
 - A hajtás felett egyszerre legfeljebb egy nagy, eager betöltésű hero illusztráció legyen.
-- Verziózott vagy tartalomhash-alapú statikus asset hosszú cache-élettartammal szolgálható ki; változáskor új fájlnév szükséges.
 
-Irányadó célméretek:
+Irányadó célméretek: egyszerű UI-ikon 1–8 KB; összetettebb saját ikon 5–15 KB; kis 3D illusztráció 20–70 KB; közepes illusztráció 50–120 KB; hero illusztráció lehetőleg 80–180 KB. A célméret nem írhatja felül a vizuális minőséget.
 
-- egyszerű UI-ikon: 1–8 KB;
-- összetettebb saját ikon: 5–15 KB;
-- kis 3D illusztráció: 20–70 KB;
-- közepes illusztráció: 50–120 KB;
-- hero illusztráció: lehetőleg 80–180 KB.
+## 9. Fejlesztési ág és ellenőrzés
 
-A célméret nem írhatja felül az olvashatóságot és a vizuális minőséget. A végleges formátumot valós fájlméret- és böngészős ellenőrzés alapján kell kiválasztani.
+- Aktív fejlesztési ág: `v0-prototype`.
+- A `main` ágba csak ellenőrzött változtatás kerülhet pull requesten keresztül.
+- Minden módosításhoz világos commitüzenet tartozzon.
+- Új funkcióhoz vagy számítási modellhez megfelelő ellenőrzés vagy teszteset szükséges.
+- Helyi futtatás: `npm run serve`, majd `http://localhost:8080`.
+- Alap tesztcsomag: `npm test`.
