@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.2.1",
   "challenges": [
     {
       "id": "shorter-shower",
@@ -51,15 +51,15 @@
       "status": "active",
       "visualKey": "dishwashing",
       "title": "Mosogatás kevesebb folyóvízzel",
-      "cardDescription": "Próbáld ki, hogyan használhatsz kevesebb folyóvizet mosogatás közben.",
+      "cardDescription": "Válassz egy apró változtatást, amellyel kevesebb víz folyhat el feleslegesen mosogatás közben.",
       "detailTitle": "Mosogatás közben kevesebb folyóvizet használok",
-      "detailDescription": "A cél a folyamatosan folyó víz idejének csökkentése úgy, hogy az edények tisztasága ne romoljon.",
+      "detailDescription": "A cél a feleslegesen folyó víz csökkentése úgy, hogy az edények tisztasága ne romoljon.",
       "imageAlt": "Izometrikus konyhai jelenet kézi mosogatással",
       "resultMode": "qualitative",
       "checkinType": "completion",
-      "modelVersion": "dishwashing-behaviour-v0.1.0",
-      "estimateText": "Ez a próba a folyamatosan folyó víz idejének megfigyelésében segít. A V0 ehhez még nem jelenít meg literes becslést.",
-      "safetyNote": "Az alapos tisztítás és az élelmiszer-biztonság nem csökkenthető a víztakarékosság kedvéért.",
+      "modelVersion": "dishwashing-behaviour-v0.2.0",
+      "estimateText": "Ez a próba a feleslegesen folyó víz csökkentésében segít. A V0 ehhez még nem jelenít meg literes becslést.",
+      "safetyNote": "Az alapos tisztítás, az élelmiszer-biztonság és a mosogatógép használati előírásai mindig elsőbbséget élveznek.",
       "questions": [
         {
           "id": "dishwashing_mode",
@@ -84,6 +84,18 @@
             { "value": "often", "label": "Gyakran" },
             { "value": "sometimes", "label": "Néha" },
             { "value": "rarely", "label": "Ritkán vagy soha" }
+          ]
+        },
+        {
+          "id": "dishwashing_change",
+          "type": "radio",
+          "label": "Melyik kis változtatást próbálnád ki?",
+          "help": "Válaszd azt, amelyik a saját mosogatási szokásodhoz illik.",
+          "defaultValue": "hand-flow",
+          "required": true,
+          "options": [
+            { "value": "hand-flow", "label": "Kézi mosogatásnál kevesebb ideig folyjon feleslegesen a víz" },
+            { "value": "machine-prerinse", "label": "Mosogatógépnél elhagyom a folyó víz alatti előöblítést" }
           ]
         }
       ]
