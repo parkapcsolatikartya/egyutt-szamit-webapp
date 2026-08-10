@@ -12,15 +12,27 @@ Ez a dokumentum az asztali gép ↔ laptop, ChatGPT ↔ Codex és localhost ↔ 
 
 ## Új gép egyszeri beállítása
 
-Ha a repository már meg van nyitva VS Code-ban, a Codex chatben elég ezt írni:
+### Ha a repository még nincs a gépen
+
+Nyiss egy Terminal ablakot, és egyszer futtasd:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/parkapcsolatikartya/egyutt-szamit-webapp/v0-prototype/scripts/bootstrap-mac.sh)"
+```
+
+A `scripts/bootstrap-mac.sh` célja, hogy a lehető legkevesebb kézi lépéssel előkészítse a Macet: ellenőrzi a Git környezetet, szükség esetén Homebrew-val telepíti/frissíti a Node.js-t és a GitHub CLI-t, klónozza a repositoryt a `~/Documents/Git/egyutt-szamit-webapp` könyvtárba, beállítja a `v0-prototype` ágat, kezeli a GitHub CLI hitelesítési folyamatát, lefuttatja az `npm test` teszteket, elindítja a localhostot és – ha telepítve van – megnyitja a projektet VS Code-ban.
+
+A felhasználói beavatkozás csak olyan pontokon marad kötelező, ahol a macOS rendszerengedélyt/jelszót kér, Homebrew első telepítése jóváhagyást igényel, vagy a GitHub böngészős fiókhitelesítést kér.
+
+### Ha a repository már meg van nyitva VS Code-ban
+
+A Codex chatben elég ezt írni:
 
 ```text
 DEVICE_SETUP
 ```
 
 A Codex az `AGENTS.md` protokollja alapján ellenőrzi és lehetőség szerint beállítja a Git, Node.js, npm és GitHub CLI környezetet, a GitHub-hitelesítést, a `v0-prototype` ágat, a teszteket és a localhost előnézetet. Csak a valóban elkerülhetetlen rendszer- vagy böngészős hitelesítési pontokon kér felhasználói beavatkozást.
-
-Ha a repository még nincs a gépen, először egyszer kell helyileg klónozni és VS Code-ban megnyitni; ezután a `DEVICE_SETUP` végzi a további környezet-ellenőrzést.
 
 ## Napi munkakezdés bármelyik gépen
 
