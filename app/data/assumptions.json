@@ -1,0 +1,41 @@
+{
+  "version": "0.1.0",
+  "modelVersion": "shower-water-v0.1.0",
+  "showerFlowRateLpm": {
+    "min": 7.6,
+    "max": 9.5,
+    "note": "Gyors becslési tartomány: víztakarékos zuhanyfej felső értéke és szabványos zuhanyfej jellemző felső értéke.",
+    "sourceIds": [
+      "epa-watersense-shower-7-6-lpm",
+      "epa-standard-shower-9-5-lpm"
+    ]
+  },
+  "challenge": {
+    "defaultReductionMinutes": 2,
+    "shortShowerReductionMinutes": 1,
+    "shortShowerThresholdMinutes": 7,
+    "minimumRemainingShowerMinutes": 3
+  },
+  "drinkingWaterReference": {
+    "litersPerPersonDay": 2,
+    "note": "Kerek, szemléltető kommunikációs érték. Nem személyre szabott egészségügyi ajánlás.",
+    "sourceIds": ["efsa-drinking-water-guidance"]
+  },
+  "sources": {
+    "epa-watersense-shower-7-6-lpm": {
+      "title": "WaterSense Specification for Showerheads",
+      "url": "https://www.epa.gov/sites/production/files/2017-01/documents/ws-products-spec-showerheads.pdf",
+      "accessed": "2026-08-03"
+    },
+    "epa-standard-shower-9-5-lpm": {
+      "title": "Showerheads | US EPA WaterSense",
+      "url": "https://www.epa.gov/watersense/showerheads",
+      "accessed": "2026-08-03"
+    },
+    "efsa-drinking-water-guidance": {
+      "title": "Táplálkozási szükségleteink",
+      "url": "https://www.efsa.europa.eu/hu/safe2eat/your-nutrition-needs",
+      "accessed": "2026-08-03"
+    }
+  }
+}

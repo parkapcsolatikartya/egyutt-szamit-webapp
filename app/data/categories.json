@@ -1,0 +1,35 @@
+{
+  "version": "0.2.2",
+  "categories": [
+    {
+      "id": "water",
+      "slug": "viz",
+      "title": "Víz",
+      "description": "Zuhanyzás, mosogatás és mosás – fedezd fel, hol használhatnál egy kicsit kevesebb vizet a hétköznapokban.",
+      "buttonLabel": "Megnézem a vízpróbákat",
+      "status": "active",
+      "visualKey": "water",
+      "imageAlt": "Izometrikus illusztráció egy folyó vizű csapról"
+    },
+    {
+      "id": "electricity",
+      "slug": "aram",
+      "title": "Áram",
+      "description": "Világítás és nyári hűtés – próbálj ki egy apró változtatást az otthoni áramhasználatban.",
+      "buttonLabel": "Megnézem az árampróbákat",
+      "status": "active",
+      "visualKey": "electricity",
+      "imageAlt": "Izometrikus illusztráció egy elektromos energiát használó házról"
+    },
+    {
+      "id": "gas",
+      "slug": "foldgaz",
+      "title": "Földgáz",
+      "description": "Fűtés, meleg víz és főzés.",
+      "buttonLabel": "Előkészítés alatt",
+      "status": "coming-soon",
+      "visualKey": "gas",
+      "imageAlt": "Izometrikus illusztráció földgázvezetékről és gázlángról"
+    }
+  ]
+}

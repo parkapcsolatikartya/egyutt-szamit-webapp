@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="hu" data-bs-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Együtt számít – próbálj ki egy apró víz- vagy energiatakarékos változtatást, és nézd meg a becsült hatását.">
+  <meta property="og:title" content="Együtt számít – egy apró döntés látható hatása">
+  <meta property="og:description" content="Víz, áram, földgáz. Válassz egy könnyen kipróbálható változtatást, és nézd meg a becsült hatását.">
+  <meta property="og:type" content="website">
+  <title>Együtt számít – víz- és energiahatásmérő</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="./assets/css/style.css?v=1.0.0">
+</head>
+<body>
+  <header class="site-header sticky-top border-bottom">
+    <nav class="navbar navbar-expand-md py-3" aria-label="Fő navigáció">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold" href="#kezdolap" data-route="home">
+          <span class="brand-mark" aria-hidden="true"><i class="bi bi-droplet-half"></i></span>
+          <span>Együtt számít</span>
+        </a>
+        <div class="d-flex align-items-center gap-2 ms-auto">
+          <button class="btn btn-sm btn-outline-primary d-flex align-items-center gap-2" type="button" data-route="impact">
+            <i class="bi bi-graph-up-arrow" aria-hidden="true"></i>
+            <span class="d-none d-sm-inline">Saját hatásom</span>
+          </button>
+          <a class="btn btn-sm btn-link link-secondary d-none d-md-inline-flex" href="./methodology.html">Módszertan</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div id="app-error" class="container pt-3 d-none">
+      <div class="alert alert-danger" role="alert"></div>
+    </div>
+
+    <section id="screen-home" class="app-screen">
+      <div class="hero-section position-relative overflow-hidden">
+        <div class="sea-motion" aria-hidden="true">
+          <span class="wave wave-a"></span>
+          <span class="wave wave-b"></span>
+          <span class="wave wave-c"></span>
+        </div>
+        <div class="container position-relative py-5 py-lg-6">
+          <div class="row align-items-center g-5">
+            <div class="col-12 col-lg-7">
+              <span class="badge rounded-pill text-bg-light border mb-3 px-3 py-2">
+                <i class="bi bi-stars me-2 text-primary"></i>Első használható prototípus
+              </span>
+              <h1 class="display-4 fw-semibold lh-sm mb-4">Egy apró döntés.<br><span class="hero-accent">Látható, becsült hatás.</span></h1>
+              <p class="lead text-body-secondary mb-4 col-xl-10">
+                Válassz a víz, az áram vagy a földgáz közül, próbálj ki egyetlen könnyen vállalható változtatást, majd nézd meg, milyen nagyságrendű hatása lehet.
+              </p>
+              <div class="d-flex flex-column flex-sm-row gap-3">
+                <button class="btn btn-primary btn-lg px-4" type="button" data-scroll-categories>
+                  Választok egy próbát <i class="bi bi-arrow-down ms-2"></i>
+                </button>
+                <button class="btn btn-outline-secondary btn-lg px-4" type="button" data-route="impact">
+                  Megnézem a saját hatásomat
+                </button>
+              </div>
+              <div class="d-flex gap-3 align-items-start mt-4 small text-body-secondary">
+                <i class="bi bi-info-circle text-primary fs-5"></i>
+                <p class="mb-0">A megjelenő számok tájékoztató becslések, nem mérőóra-adatok. Ahol bizonytalanabb a modell, szélesebb tartományt mutatunk.</p>
+              </div>
+            </div>
+            <div class="col-12 col-lg-5">
+              <div class="hero-orbit mx-auto">
+                <div class="hero-drop shadow-sm"><i class="bi bi-droplet-fill"></i></div>
+                <div class="orbit-chip orbit-water"><i class="bi bi-droplet"></i><span>Víz</span></div>
+                <div class="orbit-chip orbit-power"><i class="bi bi-lightning-charge"></i><span>Áram</span></div>
+                <div class="orbit-chip orbit-gas"><i class="bi bi-fire"></i><span>Földgáz</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="categories" class="container py-5 py-lg-6">
+        <div class="row align-items-end g-3 mb-4">
+          <div class="col-lg-8">
+            <p class="text-primary fw-semibold text-uppercase small mb-2">Válassz egy területet</p>
+            <h2 class="display-6 fw-semibold mb-2">Hol próbálnál ki ma egy kis változtatást?</h2>
+            <p class="text-body-secondary mb-0">Nem kell mindent egyszerre. Egyetlen próba elég az első körhöz.</p>
+          </div>
+        </div>
+        <div id="category-grid" class="row g-4"></div>
+      </div>
+
+      <div class="container pb-5 pb-lg-6">
+        <div class="card border-0 soft-panel">
+          <div class="card-body p-4 p-lg-5">
+            <div class="row align-items-center g-4">
+              <div class="col-lg-8">
+                <p class="text-primary fw-semibold mb-2">Mitől más ez, mint egy általános „spórolási lista”?</p>
+                <h2 class="h3 mb-3">Nem tökéletességet kér. Egy kipróbálható lépést ad.</h2>
+                <p class="text-body-secondary mb-0">A cél nem az, hogy rosszul érezd magad a fogyasztásod miatt. A saját helyzetedhez illő, kis kockázatú változtatásokból indulunk, és megmutatjuk a becsült nagyságrendet.</p>
+              </div>
+              <div class="col-lg-4 text-lg-end">
+                <a class="btn btn-outline-primary" href="./methodology.html">Hogyan becsülünk?</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-category" class="app-screen d-none">
+      <div class="container py-4 py-lg-5">
+        <button class="btn btn-link link-secondary px-0 mb-3" type="button" data-route="home">
+          <i class="bi bi-arrow-left me-2"></i>Vissza a kategóriákhoz
+        </button>
+        <div id="category-heading" class="mb-4"></div>
+        <div id="challenge-grid" class="row g-4"></div>
+      </div>
+    </section>
+
+    <section id="screen-personalize" class="app-screen d-none">
+      <div class="container py-4 py-lg-5 app-narrow">
+        <button class="btn btn-link link-secondary px-0 mb-3" type="button" data-back-category>
+          <i class="bi bi-arrow-left me-2"></i>Másik próbát választok
+        </button>
+        <div class="card border-0 app-card overflow-hidden">
+          <div class="row g-0">
+            <div class="col-12 col-md-5 challenge-visual-wrap d-flex align-items-center justify-content-center p-4">
+              <img id="personalize-image" class="img-fluid challenge-visual" src="" alt="" width="420" height="300">
+            </div>
+            <div class="col-12 col-md-7">
+              <div class="card-body p-4 p-lg-5">
+                <span id="personalize-category" class="badge rounded-pill app-badge mb-3"></span>
+                <h1 id="personalize-title" class="h2 mb-3" tabindex="-1"></h1>
+                <p id="personalize-summary" class="text-body-secondary mb-4"></p>
+                <form id="personalize-form">
+                  <fieldset>
+                    <legend id="personalize-question" class="h5 mb-2"></legend>
+                    <p id="personalize-help" class="small text-body-secondary mb-3"></p>
+                    <div id="personalize-options" class="vstack gap-2 mb-4"></div>
+                  </fieldset>
+                  <button class="btn btn-primary btn-lg w-100" type="submit">
+                    Mutasd a mai próbámat <i class="bi bi-arrow-right ms-2"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-commitment" class="app-screen d-none">
+      <div class="container py-4 py-lg-5 app-narrow">
+        <div class="card border-0 app-card">
+          <div class="card-body p-4 p-lg-5">
+            <div class="d-flex align-items-center gap-3 mb-4">
+              <span class="step-icon"><i class="bi bi-check2-circle"></i></span>
+              <div>
+                <p class="small text-uppercase text-primary fw-semibold mb-1">A mai próba</p>
+                <h1 class="h2 mb-0" tabindex="-1">Ezt próbáld ki egyszer</h1>
+              </div>
+            </div>
+            <p id="commitment-text" class="lead mb-4"></p>
+            <div class="estimate-box rounded-4 p-4 mb-4">
+              <div class="d-flex flex-column flex-sm-row justify-content-between gap-3">
+                <div>
+                  <p class="small text-uppercase fw-semibold text-primary mb-1">Ha teljesül, a becsült lehetőség</p>
+                  <p id="commitment-estimate" class="h3 mb-1"></p>
+                  <p id="commitment-basis" class="small text-body-secondary mb-0"></p>
+                </div>
+                <span id="confidence-badge" class="badge rounded-pill text-bg-light border align-self-start"></span>
+              </div>
+            </div>
+            <div class="alert alert-light border d-flex gap-3">
+              <i class="bi bi-shield-check text-primary fs-5"></i>
+              <span id="commitment-safety" class="small"></span>
+            </div>
+            <button id="start-challenge" class="btn btn-primary btn-lg w-100 mt-2" type="button">Rendben, kipróbálom</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-checkin" class="app-screen d-none">
+      <div class="container py-4 py-lg-5 app-narrow">
+        <div class="card border-0 app-card">
+          <div class="card-body p-4 p-lg-5">
+            <span class="step-icon mb-4"><i class="bi bi-chat-square-check"></i></span>
+            <p class="small text-uppercase text-primary fw-semibold mb-2">Visszajelzés</p>
+            <h1 class="h2 mb-3" tabindex="-1">Hogyan sikerült?</h1>
+            <p class="text-body-secondary mb-4">Nem kell pontosan mérned. Válaszd azt, amelyik a legközelebb áll a tapasztalatodhoz.</p>
+            <div class="vstack gap-2" id="checkin-options">
+              <button class="btn btn-outline-primary btn-lg text-start" type="button" data-completion="1">Teljesen sikerült</button>
+              <button class="btn btn-outline-primary btn-lg text-start" type="button" data-completion="0.66">Többnyire sikerült</button>
+              <button class="btn btn-outline-primary btn-lg text-start" type="button" data-completion="0.33">Részben sikerült</button>
+              <button class="btn btn-outline-secondary btn-lg text-start" type="button" data-completion="0">Most nem sikerült</button>
+            </div>
+            <p class="small text-body-secondary mt-4 mb-0">A prototípus teszteléséhez nem kell valóban egy teljes napot várnod.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-result" class="app-screen d-none">
+      <div class="container py-4 py-lg-5 app-narrow">
+        <div class="card border-0 app-card result-panel">
+          <div class="card-body p-4 p-lg-5">
+            <div class="text-center mb-4">
+              <span class="result-icon"><i class="bi bi-stars"></i></span>
+              <p class="small text-uppercase text-primary fw-semibold mt-3 mb-2">Önbevallással visszaigazolt becslés</p>
+              <h1 id="result-title" class="h2 mb-2" tabindex="-1"></h1>
+              <p id="result-subtitle" class="text-body-secondary mb-0"></p>
+            </div>
+            <div id="result-quantity-box" class="result-quantity text-center rounded-4 p-4 p-md-5 mb-4">
+              <p class="small text-uppercase fw-semibold mb-2">A mai becsült eredményed</p>
+              <p id="result-quantity" class="display-5 fw-semibold mb-1"></p>
+              <p id="result-resource" class="mb-0"></p>
+            </div>
+            <div id="result-zero" class="alert alert-light border d-none"></div>
+            <div class="card border-0 soft-panel mb-4">
+              <div class="card-body p-4">
+                <p class="small text-uppercase fw-semibold text-primary mb-2">Ha 100 ember ugyanezt a próbát teljesítené</p>
+                <p id="community-scenario" class="h5 mb-2"></p>
+                <p class="small text-body-secondary mb-0">Ez csak részvételi forgatókönyv, nem tényleges közösségi megtakarítás.</p>
+              </div>
+            </div>
+            <p id="result-note" class="small text-body-secondary mb-4"></p>
+            <div class="d-grid d-sm-flex gap-2">
+              <button id="share-result" class="btn btn-primary btn-lg flex-fill" type="button"><i class="bi bi-share me-2"></i>Megosztom</button>
+              <button class="btn btn-outline-primary btn-lg flex-fill" type="button" data-route="impact">Saját hatásom</button>
+            </div>
+            <div id="share-feedback" class="small text-body-secondary text-center mt-3" aria-live="polite"></div>
+            <button class="btn btn-link link-secondary w-100 mt-2" type="button" data-route="home">Új próbát választok</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-impact" class="app-screen d-none">
+      <div class="container py-4 py-lg-5">
+        <div class="row align-items-end g-3 mb-4">
+          <div class="col-lg-8">
+            <p class="text-primary fw-semibold text-uppercase small mb-2">Saját hatásom</p>
+            <h1 class="display-6 fw-semibold mb-2" tabindex="-1">A kisebb eredmények összeadódnak.</h1>
+            <p class="text-body-secondary mb-0">Csak ezen a böngészőn naplózott, önbevallással lezárt próbák becsült eredményeit összesítjük.</p>
+          </div>
+          <div class="col-lg-4 text-lg-end">
+            <button class="btn btn-primary" type="button" data-route="home">Új próbát választok</button>
+          </div>
+        </div>
+
+        <div id="impact-empty" class="card border-0 app-card">
+          <div class="card-body p-5 text-center">
+            <span class="result-icon"><i class="bi bi-journal-check"></i></span>
+            <h2 class="h4 mt-4">Még nincs naplózott eredményed</h2>
+            <p class="text-body-secondary mb-4">Végezz el egy próbát, és az első becsült eredmény megjelenik itt.</p>
+            <button class="btn btn-primary" type="button" data-route="home">Kezdek egy próbát</button>
+          </div>
+        </div>
+
+        <div id="impact-content" class="d-none">
+          <div id="impact-summary" class="row g-4 mb-5"></div>
+          <div class="row g-4">
+            <div class="col-12 col-xl-8">
+              <div class="card border-0 app-card h-100">
+                <div class="card-body p-4 p-lg-5">
+                  <div class="d-flex justify-content-between align-items-end gap-3 mb-3">
+                    <div>
+                      <p class="small text-uppercase fw-semibold text-primary mb-1">Hatásnapló</p>
+                      <h2 class="h3 mb-0">Lezárt próbák</h2>
+                    </div>
+                    <span id="impact-count" class="badge rounded-pill app-badge"></span>
+                  </div>
+                  <div id="impact-events" class="vstack gap-3"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-xl-4">
+              <div class="card border-0 soft-panel h-100">
+                <div class="card-body p-4">
+                  <span class="step-icon mb-3"><i class="bi bi-info-circle"></i></span>
+                  <h2 class="h5">Mit jelentenek ezek a számok?</h2>
+                  <p class="small text-body-secondary">A saját válaszaidból, a teljesítésedből és a prototípusban rögzített tipikus tartományokból készülő becslések. Nem számla- vagy mérőóra-adatok.</p>
+                  <p class="small text-body-secondary mb-0">A víz, a villamos energia és a fűtési energia külön marad; nem vonjuk össze őket egy mesterséges pontszámba.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center mt-4">
+            <button id="clear-impact" class="btn btn-sm btn-link link-secondary" type="button">Helyi hatásnapló törlése</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-top mt-4">
+    <div class="container py-4 d-flex flex-column flex-sm-row justify-content-between gap-3 small text-body-secondary">
+      <span>© 2026 Együtt számít · V1 prototípus</span>
+      <span class="d-flex gap-3"><a class="link-secondary" href="./methodology.html">Módszertan</a><a class="link-secondary" href="./privacy.html">Adatvédelem</a></span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <script type="module" src="./js/mvp-app.js?v=1.0.0"></script>
+</body>
+</html>

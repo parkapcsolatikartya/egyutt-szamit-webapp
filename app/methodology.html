@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="hu" data-bs-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Az Együtt számít V1 prototípus becslési módszertana.">
+  <title>Módszertan – Együtt számít</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="./assets/css/style.css?v=1.0.0">
+</head>
+<body>
+  <header class="site-header sticky-top border-bottom"><nav class="navbar py-3"><div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold" href="./index.html"><span class="brand-mark" aria-hidden="true"><i class="bi bi-droplet-half"></i></span><span>Együtt számít</span></a>
+    <a class="btn btn-sm btn-outline-primary" href="./index.html"><i class="bi bi-arrow-left me-2"></i>Vissza az apphoz</a>
+  </div></nav></header>
+  <main class="container py-5 app-narrow">
+    <p class="text-primary text-uppercase small fw-semibold mb-2">V1 prototípus</p>
+    <h1 class="display-5 fw-semibold mb-4">Hogyan készülnek a becslések?</h1>
+    <p class="lead text-body-secondary">Az első használható változat célja nem a számlapontosság, hanem annak megmutatása, hogy egy hétköznapi változtatás milyen nagyságrendű víz- vagy energiahatással járhat.</p>
+    <div class="alert alert-light border d-flex gap-3 my-4"><i class="bi bi-info-circle text-primary fs-5"></i><div><strong>A számok nem mérőóra-adatok.</strong><br><span class="small text-body-secondary">A személyes választás, az önbevallásos teljesítés és tipikus használati feltételezések alapján készülnek. A bizonytalanabb modelleket széles tartomány és „alacsony pontosság” jelzi.</span></div></div>
+    <section class="card border-0 app-card mb-4"><div class="card-body p-4 p-lg-5"><h2 class="h3 mb-3">Háromféle információt különítünk el</h2><div class="row g-4">
+      <div class="col-md-4"><strong class="d-block mb-2">1. Te mondod meg</strong><span class="text-body-secondary">Melyik változtatást vállalod, és utólag mennyire sikerült.</span></div>
+      <div class="col-md-4"><strong class="d-block mb-2">2. Mi becsüljük</strong><span class="text-body-secondary">A várható nagyságrendet tipikus műszaki vagy háztartási tartományokból.</span></div>
+      <div class="col-md-4"><strong class="d-block mb-2">3. Forgatókönyvet mutatunk</strong><span class="text-body-secondary">A „ha 100 ember…” szám nem tényleges közösségi eredmény, csak szemléltetés.</span></div>
+    </div></div></section>
+    <section class="card border-0 soft-panel mb-4"><div class="card-body p-4 p-lg-5"><h2 class="h3 mb-3">A mostani V1 modellek</h2><div class="vstack gap-3">
+      <div><strong>Rövidebb zuhanyzás:</strong> a korábban dokumentált 7,6–9,5 liter/perc zuhany-vízhozam tartományból számol.</div>
+      <div><strong>Mosogatás és mosás:</strong> széles prototípus-tartományokkal szemléltetjük az egy alkalomhoz kapcsolódó lehetséges vízcsökkentést. Az ENERGY STAR ajánlásai is a teljes töltetet és a folyó vizes előöblítés kerülését támogatják.</div>
+      <div><strong>Világítás és hűtés:</strong> kWh-tartományt mutatunk, de az első verzió még nem kér konkrét készülék-teljesítményt, ezért a pontosság alacsony.</div>
+      <div><strong>Fűtés:</strong> az Európai Bizottság energiatakarékossági tájékoztatója szerint a termosztát 1 °C-os csökkentése körülbelül 7% fűtési energia-megtakarítási nagyságrendet jelenthet. A V1 ezt nagyon széles napi háztartási tartománnyal szemlélteti.</div>
+    </div></div></section>
+    <section class="card border-0 app-card mb-4"><div class="card-body p-4 p-lg-5"><h2 class="h3 mb-3">Mi változik később?</h2><p class="text-body-secondary mb-0">A következő verziókban a széles prototípus-becsléseket több személyes bemenettel, készülékadatokkal és magyarországi forrásokkal lehet szűkíteni. A modellverziót minden naplózott eredmény mellett megőrizzük, így később látható marad, melyik módszerrel készült egy régebbi becslés.</p></div></section>
+    <div class="d-grid d-sm-flex gap-2"><a class="btn btn-primary btn-lg" href="./index.html">Kipróbálom az alkalmazást</a><a class="btn btn-outline-secondary btn-lg" href="./privacy.html">Adatvédelem</a></div>
+  </main>
+</body>
+</html>
