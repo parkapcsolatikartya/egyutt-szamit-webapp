@@ -1,22 +1,33 @@
 # Együtt számít – projektállapot
 
-Utolsó frissítés: 2026-08-10
+Utolsó frissítés: 2026-08-17  
 Aktív fejlesztési ág: `v0-prototype`
 
 ## Aktuális fejlesztési fázis
 
-A V0 kategóriaalapú, végigjárható prototípus fejlesztése és vizuális finomítása.
+Első végigjárható, használható V1 prototípus. A cél most a termékélmény validálása, nem a mérőóraszintű pontosság.
 
 ## Jelenleg működő fő elemek
 
-- Víz kategória – aktív.
-- Áram kategória – aktív.
-- Földgáz kategória – látható, előkészítés alatt.
-- Kategória → próba → rövid személyre szabás → egynapos vállalás → visszajelzés → eredmény → megosztás → háromnapos folytatás útvonal.
-- LocalStorage-alapú helyi állapotmentés.
-- Hash-alapú kategória- és próbaútvonalak.
-- Mobilos megosztás vagy linkmásolás.
-- Zuhanyzási próbához tartományos vízbecslési modell.
+- Három aktív fő kategória: **Víz, Áram, Földgáz**.
+- Hat kipróbálható mikrovállalás.
+- Kategória → próba → egy rövid személyre szabó választás → vállalás → önbevallásos visszajelzés → becsült eredmény.
+- Minden aktív próbánál számszerű, tartományos becslés.
+- A bizonytalanabb modellek „alacsony pontosság” jelzést kapnak.
+- 100 fős közösségi forgatókönyv, egyértelműen nem tényleges közösségi eredményként.
+- `impactEvents` alapú LocalStorage hatásnapló.
+- Dinamikus **Saját hatásom** nézet víz-, villamosenergia- és fűtésienergia-összesítéssel.
+- Natív mobilos megosztás, illetve vágólapra másolás tartalék megoldásként.
+- Regisztráció nélküli működés.
+- Világos, Bootstrap-first vizuális rendszer és finom, lassan mozgó tenger-motívum a nyitóképernyőn.
+- A korábbi `impact.html` útvonal átirányít a beépített Saját hatásom nézetre.
+
+## Becslési státusz
+
+- A zuhanyzási vízmodell a korábban dokumentált 7,6–9,5 l/perc tartományból indul.
+- A többi V1 modell szándékosan széles prototípus-becslés.
+- A felület mindenhol jelzi, hogy ezek nem mérőóra-adatok.
+- A pontosítás külön kutatási és modellfinomítási munkacsomag marad.
 
 ## Technológiai alap
 
@@ -25,12 +36,10 @@ A V0 kategóriaalapú, végigjárható prototípus fejlesztése és vizuális fi
 - Bootstrap Icons
 - célzott saját CSS: `app/assets/css/style.css`
 - vanilla / moduláris JavaScript
-- JSON adatfájlok
-- Node-alapú tesztek
+- JSON konfiguráció: `app/data/mvp-config.json`
+- LocalStorage hatásnapló
 
 ## Helyi fejlesztés
-
-A repository gyökerében:
 
 ```bash
 npm run serve
@@ -48,27 +57,19 @@ Teszt:
 npm test
 ```
 
-## ChatGPT ↔ Codex munkafolyamat
-
-- Tervezés, kutatás, UX és specifikáció: webes ChatGPT projekt.
-- Jóváhagyott aktuális feladat: `.ai/CURRENT_TASK.md`.
-- Implementáció: Codex a helyi VS Code repositoryban.
-- Codex eredményjelentése: `.ai/TASK_RESULT.md`.
-- Gyors ellenőrzés: localhost, GitHub push nélkül.
-- Gépek közötti átadás: commit + push a `v0-prototype` ágra, majd a másik gépen pull.
-- `main` csak ellenőrzött változtatást kap pull requesten keresztül.
-
 ## Kötelező szabályforrások
 
 Kanonikus szakmai forrás: a Google Drive `Csepp a tengerben` projektmappája.
 
-Codex számára helyben olvasható operatív összefoglalók:
-
-- `AGENTS.md`
-- `docs/guidelines/PROJECT_RULES.md`
-- `docs/guidelines/VISUAL_RULES.md`
-- képi/isometric feladatnál `docs/guidelines/ISOMETRIC_RULES.md`
+- `00A – Kötelező munkakezdési iránytű`
+- `01 – Projektállapot és következő feladatok`
+- `03 – Számítási modellek`
+- `04 – Kérdőív és felhasználói útvonal`
+- `05 – MVP specifikáció`
+- `06 – Technikai dokumentáció`
+- `07 – Döntési napló`
+- `09 – Vizuális rendszer és képi asset irányelvek`
 
 ## Következő ellenőrzési pont
 
-A ChatGPT → CURRENT_TASK → Codex `START` → localhost → TASK_RESULT → `SYNC` → ChatGPT visszaellenőrzés teljes körének próbaüzeme.
+Kézi mobilos és asztali végigjárás, majd a leginkább félreérthető becslések és szövegek finomítása valódi tesztfelhasználói visszajelzés alapján.

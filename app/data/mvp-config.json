@@ -1,0 +1,140 @@
+{
+  "version": "1.0.0",
+  "estimateNotice": "A számok gyors, tájékoztató becslések. Nem mérőóra-adatok; a cél a nagyságrend és a kipróbálható változtatás megmutatása.",
+  "categories": [
+    {
+      "id": "water",
+      "title": "Víz",
+      "icon": "bi-droplet-fill",
+      "image": "./assets/images/ikon-viz.webp",
+      "description": "Zuhanyzás, mosogatás és mosás – három hétköznapi hely, ahol egy kis változtatás is láthatóvá tehető."
+    },
+    {
+      "id": "electricity",
+      "title": "Áram",
+      "icon": "bi-lightning-charge-fill",
+      "image": "./assets/images/ikon-aram.webp",
+      "description": "Világítás és hűtés – nem lemondást keresünk, hanem egy könnyen kipróbálható beállítást."
+    },
+    {
+      "id": "gas",
+      "title": "Földgáz",
+      "icon": "bi-fire",
+      "image": "./assets/images/ikon-foldgaz.webp",
+      "description": "Fűtés – egy kicsi, komfortos beállításváltozás becsült hatása a fűtési szezonban."
+    }
+  ],
+  "challenges": [
+    {
+      "id": "shorter-shower",
+      "categoryId": "water",
+      "title": "Rövidebb zuhanyzás",
+      "summary": "Próbáld meg egy vagy két perccel csökkenteni azt az időt, amíg folyik a víz.",
+      "image": "./assets/images/viz-zuhanyzas.webp",
+      "imageAlt": "Izometrikus zuhanyzós fürdőszobai jelenet",
+      "question": {
+        "label": "Mekkora változtatást próbálnál ki ma?",
+        "help": "Nem kell sietni: a szükséges tisztálkodás maradjon kényelmes.",
+        "options": [
+          {"value": "1", "label": "Kb. 1 perccel rövidebb", "factor": 1, "commitment": "A következő zuhanyzásnál körülbelül 1 perccel rövidebb ideig folyatom a vizet."},
+          {"value": "2", "label": "Kb. 2 perccel rövidebb", "factor": 2, "commitment": "A következő zuhanyzásnál körülbelül 2 perccel rövidebb ideig folyatom a vizet."}
+        ]
+      },
+      "estimate": {"resource": "water", "metric": "water_saved", "unit": "liter", "min": 7.6, "max": 9.5, "basis": "1 perccel rövidebb vízfolyás, 7,6–9,5 liter/perc prototípus-tartománnyal.", "confidence": "közepes"},
+      "safety": "A szükséges tisztálkodás és higiénia mindig elsőbbséget élvez."
+    },
+    {
+      "id": "dishwashing-flow",
+      "categoryId": "water",
+      "title": "Kevesebb folyóvíz mosogatásnál",
+      "summary": "A következő mosogatásnál csökkentsd azt az időt, amikor a víz úgy folyik, hogy éppen nincs rá szükség.",
+      "image": "./assets/images/viz-mosogatas.webp",
+      "imageAlt": "Izometrikus konyhai mosogatási jelenet",
+      "question": {
+        "label": "Melyik helyzet illik hozzád jobban?",
+        "help": "Válaszd azt, amit ma tényleg ki tudsz próbálni.",
+        "options": [
+          {"value": "hand", "label": "Többnyire kézzel mosogatok", "factor": 1, "commitment": "A következő kézi mosogatásnál elzárom a vizet, amikor éppen nem öblítek."},
+          {"value": "machine", "label": "Mosogatógépet is használok", "factor": 0.7, "commitment": "A következő gépi mosogatásnál nem öblítem végig folyó víz alatt az edényeket, ha a gép használati előírása ezt lehetővé teszi."}
+        ]
+      },
+      "estimate": {"resource": "water", "metric": "water_saved", "unit": "liter", "min": 5, "max": 20, "basis": "egy mosogatási alkalom tipikus, feleslegesen folyó vagy előöblítésre használt vízének széles prototípus-tartománya.", "confidence": "alacsony"},
+      "safety": "Az alapos tisztítás, az élelmiszer-biztonság és a gép használati előírásai elsőbbséget élveznek."
+    },
+    {
+      "id": "full-washer-load",
+      "categoryId": "water",
+      "title": "Jól kihasznált mosógéptöltet",
+      "summary": "Ha nem sürgős a mosás, várd meg, amíg ésszerűen jobban kihasználható a gép kapacitása.",
+      "image": "./assets/images/viz-mosas.webp",
+      "imageAlt": "Izometrikus mosógépes jelenet",
+      "question": {
+        "label": "Mennyire gyakori nálad a kevés ruhával indított mosás?",
+        "help": "A gépet nem kell túlterhelni – csak a felesleges külön ciklusokat keressük.",
+        "options": [
+          {"value": "often", "label": "Előfordul elég gyakran", "factor": 1, "commitment": "Ha nem sürgős, a következő mosást megvárom, amíg jól kihasználható töltet gyűlik össze."},
+          {"value": "sometimes", "label": "Csak néha", "factor": 0.5, "commitment": "A következő kevés ruhás mosás előtt megnézem, várhat-e a ciklus egy jobban kihasznált töltetig."}
+        ]
+      },
+      "estimate": {"resource": "water", "metric": "water_saved", "unit": "liter", "min": 20, "max": 55, "basis": "egy részben vagy egészben elkerülhető külön mosási ciklus vízigényének szemléltető, széles tartománya.", "confidence": "alacsony"},
+      "safety": "A gép gyártója által megadott kapacitást ne lépd túl, és a szükséges mosást ne halaszd egészségügyi vagy higiéniai kockázattal."
+    },
+    {
+      "id": "task-lighting",
+      "categoryId": "electricity",
+      "title": "Célzott esti világítás",
+      "summary": "Egy nyugodt esti tevékenységnél csak azt a területet világítsd meg, ahol valóban szükséges.",
+      "image": "./assets/images/aram-vilagitas.webp",
+      "imageAlt": "Izometrikus szobajelenet célzott világítással",
+      "question": {
+        "label": "Körülbelül mennyi ideig próbálnád ki?",
+        "help": "Csak akkor, ha a kisebb fény is kényelmes és biztonságos.",
+        "options": [
+          {"value": "1h", "label": "Kb. 1 órán át", "factor": 0.5, "commitment": "Ma körülbelül 1 órán át csak ott világítok, ahol szükséges."},
+          {"value": "2h", "label": "Kb. 2 órán át", "factor": 1, "commitment": "Ma körülbelül 2 órán át csak ott világítok, ahol szükséges."},
+          {"value": "4h", "label": "Kb. 4 órán át", "factor": 2, "commitment": "Ma körülbelül 4 órán át csak ott világítok, ahol szükséges."}
+        ]
+      },
+      "estimate": {"resource": "electricity", "metric": "electricity_saved", "unit": "kWh", "min": 0.02, "max": 0.10, "basis": "kb. 2 óra célzott világítás, többféle LED-fényforrás és helyiség széles prototípus-feltételezésével.", "confidence": "alacsony"},
+      "safety": "Olvasáshoz, munkához és közlekedéshez mindig maradjon elegendő fény."
+    },
+    {
+      "id": "gentle-cooling",
+      "categoryId": "electricity",
+      "title": "Kíméletesebb hűtés",
+      "summary": "Próbálj egy fokkal magasabb beállítást, rövidebb üzemidőt vagy először árnyékolást és esti szellőztetést.",
+      "image": "./assets/images/aram-legkondi-v2.webp",
+      "imageAlt": "Izometrikus nappali légkondicionálóval",
+      "question": {
+        "label": "Melyik változtatást próbálnád ki?",
+        "help": "A komfort és az egészség fontosabb a megtakarításnál.",
+        "options": [
+          {"value": "temperature", "label": "1 °C-kal magasabb klímabeállítás", "factor": 1, "commitment": "A következő klímahasználatnál 1 °C-kal magasabb, de még kényelmes beállítást próbálok ki."},
+          {"value": "shorter", "label": "Rövidebb klímahasználat", "factor": 0.8, "commitment": "A következő klímahasználatot egy kicsit rövidebbre veszem, ha a komfort megmarad."},
+          {"value": "passive", "label": "Először árnyékolás / szellőztetés", "factor": 0.6, "commitment": "Ma először árnyékolással vagy megfelelő időben végzett szellőztetéssel próbálom mérsékelni a meleget."}
+        ]
+      },
+      "estimate": {"resource": "electricity", "metric": "electricity_saved", "unit": "kWh", "min": 0.15, "max": 0.80, "basis": "egy átlagos hűtési alkalom széles teljesítmény- és időtartam-feltételezéséből képzett prototípus-tartomány.", "confidence": "alacsony"},
+      "safety": "Hőségben, betegség, várandósság, idős kor vagy más kockázat esetén a biztonságos hőmérséklet az első."
+    },
+    {
+      "id": "heating-one-degree",
+      "categoryId": "gas",
+      "title": "1 °C-kal visszafogottabb fűtés",
+      "summary": "A fűtési szezonban próbálj ki egy fokkal alacsonyabb beállítást egy olyan időszakban, amikor ez továbbra is komfortos.",
+      "image": "./assets/images/ikon-foldgaz.webp",
+      "imageAlt": "Izometrikus földgáz ikon",
+      "question": {
+        "label": "Mennyi ideig próbálnád ki egy fűtési napon?",
+        "help": "Ez szezonális próba. Ha most nincs fűtési időszak, elmentheted későbbre.",
+        "options": [
+          {"value": "4h", "label": "Kb. 4 órán át", "factor": 0.5, "commitment": "Egy fűtési napon körülbelül 4 órán át 1 °C-kal alacsonyabb beállítást próbálok ki, ha komfortos."},
+          {"value": "8h", "label": "Kb. 8 órán át", "factor": 1, "commitment": "Egy fűtési napon körülbelül 8 órán át 1 °C-kal alacsonyabb beállítást próbálok ki, ha komfortos."},
+          {"value": "day", "label": "A nap nagy részében", "factor": 1.5, "commitment": "Egy fűtési napon a nap nagy részében 1 °C-kal alacsonyabb beállítást próbálok ki, ha komfortos."}
+        ]
+      },
+      "estimate": {"resource": "heating", "metric": "heating_energy_saved", "unit": "kWh", "min": 0.4, "max": 1.8, "basis": "1 °C-os termosztát-változtatás kb. 7%-os fűtési energia-nagyságrendjéből és nagyon széles napi háztartási fogyasztási feltételezésből képzett prototípus-tartomány.", "confidence": "alacsony"},
+      "safety": "Ne csökkentsd a hőmérsékletet olyan szintre, amely egészségügyi kockázatot vagy tartós komfortromlást okoz."
+    }
+  ]
+}
